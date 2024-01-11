@@ -4,7 +4,7 @@ import Button from './Button';
 import Input from './Input';
 import Card from './Card';
 import Badge from './Badge'; // Import the Badge component
-import { FaTrash, FaRegCalendarAlt } from 'react-icons/fa';
+import { FaTrash, FaRegCalendarAlt, FaPencilAlt } from 'react-icons/fa';
 
 function App() {
    const [todos, setTodos] = useState(() => {
@@ -25,6 +25,23 @@ function App() {
    const handleBadgeClick = (badgeText) => {
    setSelectedBadge(badgeText);
    setFilter(badgeText);
+   };
+
+   const [editingTodo, setEditingTodo] = useState(null);
+
+   const [editText, setEditText] = useState('');
+
+   // Update handleEditClick to set the editText state
+   const handleEditClick = (todo) => {
+      setEditingTodo(todo);
+      setEditText(todo.text);
+   };
+
+   // Update handleUpdateTodo to clear the editText state
+   const handleUpdateTodo = (id, newText) => {
+      setTodos(todos.map(todo => todo.id === id ? { ...todo, text: newText } : todo));
+      setEditingTodo(null);
+      setEditText('');
    };
 
    const uniqueCategories = todos.map(todo => todo.category)
@@ -142,12 +159,21 @@ function App() {
                            className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
                         >
                            <div>
-                              <Checkbox 
-                                 item={todo.text} 
-                                 checked={todo.completed} 
-                                 onChange={() => toggleCompletion(todo.id)}
-                                 style={{ fontSize: '5.2em' }}
-                              />
+                              {editingTodo === todo ? (
+                                 <input 
+                                    value={editText} 
+                                    onChange={(e) => setEditText(e.target.value)}
+                                    onBlur={(e) => handleUpdateTodo(todo.id, e.target.value)} 
+                                    autoFocus
+                                 />
+                              ) : (
+                                 <Checkbox 
+                                    item={todo.text} 
+                                    checked={todo.completed} 
+                                    onChange={() => toggleCompletion(todo.id)}
+                                    style={{ fontSize: '5.2em' }}
+                                 />
+                              )}
                               <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
                                  <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
                                  <span>
@@ -157,9 +183,14 @@ function App() {
                                  <span>{todo.category}</span>
                               </div>
                            </div>
-                           <Button onClick={() => deleteTodo(todo.id)}>
-                              <FaTrash />
-                           </Button>
+                           <div style={{ display: 'flex', justifyContent: 'space-between', width: '80px' }}>
+                              <Button onClick={() => handleEditClick(todo)} style={{ marginRight: '10px' }}>
+                                 <FaPencilAlt />
+                              </Button>
+                              <Button onClick={() => deleteTodo(todo.id)}>
+                                 <FaTrash />
+                              </Button>
+                           </div>
                         </div>
                      ))}
                   </div>
