@@ -27,7 +27,6 @@
   @apply text-brand-black font-bold p-2 rounded hover:bg-brand-black hover:text-white focus:outline-none;
 }
 
-/* Define your breakpoints */
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .card {
@@ -63,6 +62,6 @@
 }
 
 .input-container > div {
-  flex: 1 0 200px; /* Adjust this value to control when items wrap onto the next line */
+  flex: 1 0 200px;
   margin: 10px;
 }
