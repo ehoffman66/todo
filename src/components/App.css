@@ -1,0 +1,56 @@
+/* App.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@font-face {
+  font-family: 'Eksell Display';
+  src: url('/path-to-your-font/EksellDisplay-Regular.otf') format('opentype');
+  font-weight: bold;
+  font-style: bold;
+}
+
+/* General body styling */
+body {
+  @apply bg-brand-gray font-sans;
+}
+
+/* Styling for the main container */
+.container {
+  @apply max-w-4xl mx-auto px-4 py-8;
+}
+
+/* Heading style */
+h1 {
+  @apply text-4xl font-bold text-brand-black mb-6;
+}
+
+/* Card styling */
+.card {
+  @apply bg-white p-6 rounded-lg shadow-md;
+}
+
+/* Form input styling */
+.input {
+  @apply flex-grow p-2 mr-4 border border-brand-black rounded focus:outline-none focus:border-brand-orange;
+}
+
+/* Form button styling */
+.button {
+  @apply bg-brand-orange text-white px-6 py-2 rounded focus:outline-none hover:bg-orange-600;
+}
+
+/* Todo item styling */
+.todo {
+  @apply flex items-center justify-between p-2 my-2 bg-brand-gray rounded;
+}
+
+/* Todo text styling */
+.todo span {
+  @apply text-brand-black;
+}
+
+/* Complete button styling */
+.todo button {
+  @apply text-brand-black font-bold p-2 rounded hover:bg-brand-black hover:text-white focus:outline-none;
+}
