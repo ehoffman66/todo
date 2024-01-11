@@ -1,38 +1,68 @@
-.App {
-  text-align: center;
+.card {
+  @apply bg-white p-6 rounded-lg shadow-md;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Form input styling */
+.input {
+  @apply flex-grow p-2 mr-4 border border-brand-black rounded focus:outline-none focus:border-brand-orange;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Form button styling */
+.button {
+  @apply bg-brand-orange text-white px-6 py-2 rounded focus:outline-none hover:bg-orange-600;
+}
+
+/* Todo item styling */
+.todo {
+  @apply flex items-center justify-between p-2 my-2 bg-brand-gray rounded;
+}
+
+/* Todo text styling */
+.todo span {
+  @apply text-brand-black;
+}
+
+/* Complete button styling */
+.todo button {
+  @apply text-brand-black font-bold p-2 rounded hover:bg-brand-black hover:text-white focus:outline-none;
+}
+
+/* Define your breakpoints */
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .card {
+    @apply p-8;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .card {
+    @apply p-10;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .card {
+    @apply p-12;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .card {
+    @apply p-14;
+  }
+}
+
+.input-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-container > div {
+  flex: 1 0 200px; /* Adjust this value to control when items wrap onto the next line */
+  margin: 10px;
 }
