@@ -19,9 +19,22 @@ function App() {
    const [dueDate, setDueDate] = useState('');
    const [category, setCategory] = useState('');
    const [filter, setFilter] = useState('All'); 
+
+   const [selectedBadge, setSelectedBadge] = useState('All');
+
+   const handleBadgeClick = (badgeText) => {
+   setSelectedBadge(badgeText);
+   setFilter(badgeText);
+   };
+
    const uniqueCategories = todos.map(todo => todo.category)
                               .filter((category, index, self) => self.indexOf(category) === index);
 
+   const sortedTodos = todos.sort((a, b) => a.completed - b.completed);
+
+   const uncompletedTodos = sortedTodos.filter(todo => !todo.completed);
+   const completedTodos = sortedTodos.filter(todo => todo.completed);
+                           
    useEffect(() => {
       localStorage.setItem('todos', JSON.stringify(todos));
    }, [todos]);
@@ -111,17 +124,48 @@ function App() {
                      <Button className="p-10" onClick={addTodo}>+</Button>
                   </form>
                   <div className="mb-4 flex space-x-2">
-                     <Badge badgeText="All" onClick={() => setFilter('All')} />
-                     <Badge badgeText="Today" onClick={() => setFilter('Today')} />
-                     <Badge badgeText="Overdue" onClick={() => setFilter('Overdue')} />
-                     <Badge badgeText="Tomorrow" onClick={() => setFilter('Tomorrow')} />
+                     <Badge badgeText="All" onClick={handleBadgeClick} isSelected={'All' === selectedBadge} />
+                     <Badge badgeText="Today" onClick={handleBadgeClick} isSelected={'Today' === selectedBadge} />
+                     <Badge badgeText="Overdue" onClick={handleBadgeClick} isSelected={'Overdue' === selectedBadge} />
+                     <Badge badgeText="Tomorrow" onClick={handleBadgeClick} isSelected={'Tomorrow' === selectedBadge} />
                      <span style={{ margin: '0 10px' }}></span>
                      {uniqueCategories.map(category => (
-                        <Badge key={category} badgeText={category} onClick={() => setFilter(category)} />
+                        <Badge key={category} badgeText={category} onClick={handleBadgeClick} isSelected={category === selectedBadge} />
                      ))}
                   </div>
                   <div>
-                     {todos.filter(isTodoVisible).sort((a, b) => a.completed - b.completed).map((todo) => (
+                  <h2 style={{ fontSize: '2em' }}>Todo Items</h2>
+                     {uncompletedTodos.filter(isTodoVisible).map((todo) => (
+                        <div 
+                           key={todo.id} // Use the unique id as a key
+                           className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
+                        >
+                           <div>
+                              <Checkbox 
+                                 item={todo.text} 
+                                 checked={todo.completed} 
+                                 onChange={() => toggleCompletion(todo.id)}
+                                 style={{ fontSize: '5.2em' }}
+                              />
+                              <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
+                                 <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
+                                 <span>
+                                    {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
+                                 </span>
+                                 <span style={{ margin: '0 5px' }}>|</span>
+                                 <span>{todo.category}</span>
+                              </div>
+                           </div>
+                           <Button onClick={() => deleteTodo(todo.id)}>
+                              <FaTrash />
+                           </Button>
+                        </div>
+                     ))}
+                  </div>
+
+                  <div>
+                     <h2 style={{ fontSize: '2em' }}>Completed Items</h2>
+                     {completedTodos.filter(isTodoVisible).map((todo) => (
                         <div 
                            key={todo.id} // Use the unique id as a key
                            className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
