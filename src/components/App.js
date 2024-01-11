@@ -134,6 +134,7 @@ function App() {
                      ))}
                   </div>
                   <div>
+                  <div style={{ marginTop: '20px' }}>
                   <h2 style={{ fontSize: '2em' }}>Todo Items</h2>
                      {uncompletedTodos.filter(isTodoVisible).map((todo) => (
                         <div 
@@ -162,8 +163,10 @@ function App() {
                         </div>
                      ))}
                   </div>
+                  </div>
 
                   <div>
+                  <div style={{ marginTop: '50px' }}>
                      <h2 style={{ fontSize: '2em' }}>Completed Items</h2>
                      {completedTodos.filter(isTodoVisible).map((todo) => (
                         <div 
@@ -191,6 +194,7 @@ function App() {
                            </Button>
                         </div>
                      ))}
+                  </div>
                   </div>
                </div>
             }/>
