@@ -22,9 +22,6 @@
   @apply bg-gray-100 p-2 my-2 rounded-md;
 }
 
-/* Add custom styles as needed based on the design */
 .container {
   @apply max-w-4xl;
 }
-
-/* More custom styles for buttons, inputs, etc. */
