@@ -115,41 +115,49 @@ function App() {
 
    return (
       <div className="font-sans bg-brand-gray min-h-screen">
-         <div className="container mx-auto px-4 py-8">
-            <Card heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
-               <div>
-                  <form onSubmit={addTodo} className="flex items-center mb-4">
-                     <Input 
-                        value={task} 
-                        setValue={setTask} 
-                        size="300px"
-                        placeholder="Add a new task" 
-                     />
-                     <Input 
-                        value={category} 
-                        setValue={setCategory} 
-                        size="130px"
-                        placeholder="Category" 
-                     />
-                     <Input 
-                        type="date"
-                        value={dueDate} 
-                        setValue={setDueDate}
-                        size="150px"
-                        placeholder="Due date" 
-                     />
-                     <Button className="p-10" onClick={addTodo}>+</Button>
-                  </form>
-                  <div className="mb-4 flex space-x-2">
-                     <Badge badgeText="All" onClick={handleBadgeClick} isSelected={'All' === selectedBadge} />
-                     <Badge badgeText="Today" onClick={handleBadgeClick} isSelected={'Today' === selectedBadge} />
-                     <Badge badgeText="Overdue" onClick={handleBadgeClick} isSelected={'Overdue' === selectedBadge} />
-                     <Badge badgeText="Tomorrow" onClick={handleBadgeClick} isSelected={'Tomorrow' === selectedBadge} />
-                     <span style={{ margin: '0 10px' }}></span>
-                     {uniqueCategories.map(category => (
-                        <Badge key={category} badgeText={category} onClick={handleBadgeClick} isSelected={category === selectedBadge} />
-                     ))}
-                  </div>
+        <div className="container mx-auto px-4 py-8">
+          <Card heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
+            <div>
+              <form onSubmit={addTodo} className="flex flex-wrap items-center mb-4">
+                <div className="flex-1 min-w-300px m-2">
+                  <Input 
+                    value={task} 
+                    setValue={setTask} 
+                    size="300px"
+                    placeholder="Add a new task" 
+                  />
+                </div>
+                <div className="flex-1 min-w-130px m-2">
+                  <Input 
+                    value={category} 
+                    setValue={setCategory} 
+                    size="130px"
+                    placeholder="Category" 
+                  />
+                </div>
+                <div className="flex-1 min-w-150px m-2">
+                  <Input 
+                    type="date"
+                    value={dueDate} 
+                    setValue={setDueDate}
+                    size="150px"
+                    placeholder="Due date" 
+                  />
+                </div>
+                <div className="m-2">
+                  <Button className="p-10" onClick={addTodo}>+</Button>
+                </div>
+              </form>
+            <div className="mb-4 flex flex-wrap space-x-2">
+               <Badge badgeText="All" onClick={handleBadgeClick} isSelected={'All' === selectedBadge} className="my-10" />
+               <Badge badgeText="Today" onClick={handleBadgeClick} isSelected={'Today' === selectedBadge} className="my-10" />
+               <Badge badgeText="Overdue" onClick={handleBadgeClick} isSelected={'Overdue' === selectedBadge} className="my-10" />
+               <Badge badgeText="Tomorrow" onClick={handleBadgeClick} isSelected={'Tomorrow' === selectedBadge} className="my-10" />
+               <span style={{ margin: '0 10px' }}></span>
+               {uniqueCategories.map(category => (
+                  <Badge key={category} badgeText={category} onClick={handleBadgeClick} isSelected={category === selectedBadge} className="my-10" />
+               ))}
+            </div>
                   <div>
                   <div style={{ marginTop: '20px' }}>
                   <h2 style={{ fontSize: '2em' }}>Todo Items</h2>

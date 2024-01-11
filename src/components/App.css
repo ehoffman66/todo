@@ -1,31 +1,3 @@
-/* App.css */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-@font-face {
-  font-family: 'Eksell Display';
-  src: url('/path-to-your-font/EksellDisplay-Regular.otf') format('opentype');
-  font-weight: bold;
-  font-style: bold;
-}
-
-/* General body styling */
-body {
-  @apply bg-brand-gray font-sans;
-}
-
-/* Styling for the main container */
-.container {
-  @apply max-w-4xl mx-auto px-4 py-8;
-}
-
-/* Heading style */
-h1 {
-  @apply text-4xl font-bold text-brand-black mb-6;
-}
-
-/* Card styling */
 .card {
   @apply bg-white p-6 rounded-lg shadow-md;
 }
@@ -53,4 +25,44 @@ h1 {
 /* Complete button styling */
 .todo button {
   @apply text-brand-black font-bold p-2 rounded hover:bg-brand-black hover:text-white focus:outline-none;
+}
+
+/* Define your breakpoints */
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .card {
+    @apply p-8;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .card {
+    @apply p-10;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .card {
+    @apply p-12;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .card {
+    @apply p-14;
+  }
+}
+
+.input-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.input-container > div {
+  flex: 1 0 200px; /* Adjust this value to control when items wrap onto the next line */
+  margin: 10px;
 }
