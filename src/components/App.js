@@ -103,7 +103,7 @@ function App() {
                dueDate.getMonth() === today.getMonth() &&
                dueDate.getDate() === today.getDate();
          case 'Overdue':
-            return dueDate < today;
+            return dueDate < today && !todo.completed;
          case 'Tomorrow':
             return dueDate.getFullYear() === tomorrow.getFullYear() &&
                dueDate.getMonth() === tomorrow.getMonth() &&
@@ -206,33 +206,39 @@ function App() {
 
                   <div>
                   <div style={{ marginTop: '50px' }}>
-                     <h2 style={{ fontSize: '2em' }}>Completed Items</h2>
-                     {completedTodos.filter(isTodoVisible).map((todo) => (
-                        <div 
-                           key={todo.id} // Use the unique id as a key
-                           className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
-                        >
-                           <div>
-                              <Checkbox 
-                                 item={todo.text} 
-                                 checked={todo.completed} 
-                                 onChange={() => toggleCompletion(todo.id)}
-                                 style={{ fontSize: '5.2em' }}
-                              />
-                              <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
-                                 <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
-                                 <span>
-                                    {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
-                                 </span>
-                                 <span style={{ margin: '0 5px' }}>|</span>
-                                 <span>{todo.category}</span>
+                     {!(selectedBadge === 'Today' || selectedBadge === 'Overdue' || selectedBadge === 'Tomorrow') && (
+                        <h2 className="text-2xl font-bold mb-4">Completed Tasks</h2>
+                     )}
+                     {completedTodos.filter(isTodoVisible).map((todo) => 
+                        (todo.completed && (selectedBadge === 'Today' || selectedBadge === 'Overdue' || selectedBadge === 'Tomorrow')) 
+                           ? null 
+                           : (
+                              <div 
+                                 key={todo.id} // Use the unique id as a key
+                                 className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
+                              >
+                                 <div>
+                                    <Checkbox 
+                                       item={todo.text} 
+                                       checked={todo.completed} 
+                                       onChange={() => toggleCompletion(todo.id)}
+                                       style={{ fontSize: '5.2em' }}
+                                    />
+                                    <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
+                                       <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
+                                       <span>
+                                          {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
+                                       </span>
+                                       <span style={{ margin: '0 5px' }}>|</span>
+                                       <span>{todo.category}</span>
+                                    </div>
+                                 </div>
+                                 <Button onClick={() => deleteTodo(todo.id)}>
+                                    <FaTrash />
+                                 </Button>
                               </div>
-                           </div>
-                           <Button onClick={() => deleteTodo(todo.id)}>
-                              <FaTrash />
-                           </Button>
-                        </div>
-                     ))}
+                           )
+                     )}
                   </div>
                   </div>
                </div>
