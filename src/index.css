@@ -1,13 +1,30 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form {
+  @apply grid grid-cols-1 gap-4;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.input {
+  @apply bg-gray-200 text-gray-900 p-2 rounded-md;
 }
+
+.button {
+  @apply bg-black text-white py-2 px-4 rounded-md;
+}
+
+.todos {
+  @apply mt-4;
+}
+
+.todo {
+  @apply bg-gray-100 p-2 my-2 rounded-md;
+}
+
+/* Add custom styles as needed based on the design */
+.container {
+  @apply max-w-4xl;
+}
+
+/* More custom styles for buttons, inputs, etc. */
