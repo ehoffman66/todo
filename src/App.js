@@ -31,7 +31,7 @@ function App() {
    };
 
    const handleSetCategory = (value) => {
-      const noSpaces = value.replace(/\s/g, '');
+      const noSpaces = value.replace(/\s/g, '').toLowerCase();
       setCategory(noSpaces);
    };
 
