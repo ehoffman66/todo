@@ -41,18 +41,15 @@ function App() {
 
    const [sortOption, setSortOption] = useState('Due Date');
 
-   // Use this function as the onItemSelected prop for the Select component
    const handleSortOptionChange = (option) => {
    setSortOption(option);
    }
 
-   // Update handleEditClick to set the editText state
    const handleEditClick = (todo) => {
       setEditingTodo(todo);
       setEditText(todo.text);
    };
 
-   // Update handleUpdateTodo to clear the editText state
    const handleUpdateTodo = (id, newText) => {
       setTodos(todos.map(todo => todo.id === id ? { ...todo, text: newText } : todo));
       setEditingTodo(null);
@@ -64,11 +61,9 @@ function App() {
 
 
    const sortedTodos = [...todos].sort((a, b) => {
-     // First sort by completed status
      if (a.completed !== b.completed) {
         return a.completed ? 1 : -1;
      }
-     // If both tasks have the same completed status, sort based on the selected option
      switch (sortOption) {
         case 'Due Date':
            const dateA = new Date(a.dueDate);
@@ -77,9 +72,8 @@ function App() {
         case 'Category':
            const categoryComparison = a.category.localeCompare(b.category);
            return categoryComparison !== 0 ? categoryComparison : a.id - b.id;
-        // Add more cases if you have more sort options
         default:
-           return 0; // No sorting
+           return 0;
      }
    });
 
@@ -98,7 +92,7 @@ function App() {
          localDueDate = new Date(year, month - 1, day);
       }
       const newTodo = {
-         id: Date.now(), // Add a unique id
+         id: Date.now(),
          text: task,
          completed: false,
          dueDate: localDueDate,
@@ -124,7 +118,7 @@ function App() {
       const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dueDate = new Date(todo.dueDate);
-      dueDate.setHours(0, 0, 0, 0); // Set the time of the due date to midnight
+      dueDate.setHours(0, 0, 0, 0);
 
       if (uniqueCategories.includes(filter)) {
          return todo.category === filter;
@@ -199,7 +193,7 @@ function App() {
                      </div>                 
                   {sortedTodos.filter(todo => !todo.completed && isTodoVisible(todo)).map((todo) => (
                         <div 
-                           key={todo.id} // Use the unique id as a key
+                           key={todo.id}
                            className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
                         >
                            <div>
@@ -250,7 +244,7 @@ function App() {
                            ? null 
                            : (
                               <div 
-                                 key={todo.id} // Use the unique id as a key
+                                 key={todo.id}
                                  className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
                               >
                                  <div>
