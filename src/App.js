@@ -5,6 +5,7 @@ import Input from './components/Input';
 import Card from './components/Card';
 import Badge from './components/Badge';
 import Select from './components/Select'; 
+import { compareAsc, parseISO } from 'date-fns';
 import { FaTrash, FaRegCalendarAlt, FaPencilAlt } from 'react-icons/fa';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
          return [];
       }
    });
+
    const [task, setTask] = useState('');
    const [dueDate, setDueDate] = useState('');
    const [category, setCategory] = useState('');
@@ -33,6 +35,13 @@ function App() {
 
    const [editText, setEditText] = useState('');
 
+   const [sortOption, setSortOption] = useState('Due Date');
+
+   // Use this function as the onItemSelected prop for the Select component
+   const handleSortOptionChange = (option) => {
+   setSortOption(option);
+   }
+
    // Update handleEditClick to set the editText state
    const handleEditClick = (todo) => {
       setEditingTodo(todo);
@@ -49,9 +58,26 @@ function App() {
    const uniqueCategories = todos.map(todo => todo.category)
                               .filter((category, index, self) => self.indexOf(category) === index);
 
-   const sortedTodos = todos.sort((a, b) => a.completed - b.completed);
 
-   const uncompletedTodos = sortedTodos.filter(todo => !todo.completed);
+   const sortedTodos = [...todos].sort((a, b) => {
+      // First sort by completed status
+      if (a.completed !== b.completed) {
+         return a.completed ? 1 : -1;
+      }
+      // If both tasks have the same completed status, sort based on the selected option
+      switch (sortOption) {
+         case 'Due Date':
+            const dateComparison = compareAsc(parseISO(a.dueDate), parseISO(b.dueDate));
+            return dateComparison !== 0 ? dateComparison : a.id - b.id;
+         case 'Category':
+            const categoryComparison = a.category.localeCompare(b.category);
+            return categoryComparison !== 0 ? categoryComparison : a.id - b.id;
+         // Add more cases if you have more sort options
+         default:
+            return 0; // No sorting
+      }
+   });
+
    const completedTodos = sortedTodos.filter(todo => todo.completed);
                            
    useEffect(() => {
@@ -164,9 +190,9 @@ function App() {
                   <div style={{ marginTop: '20px' }}>
                   <div className="flex justify-between items-center mb-4">
                      <h2 className="text-2xl">Todo Items</h2>
-                     <Select items={sortOptions} onItemSelected={(item) => console.log(item)} />
-                  </div>                 
-                  {uncompletedTodos.filter(isTodoVisible).map((todo) => (
+                     <Select items={sortOptions} onItemSelected={handleSortOptionChange} />                
+                     </div>                 
+                  {sortedTodos.filter(todo => !todo.completed && isTodoVisible(todo)).map((todo) => (
                         <div 
                            key={todo.id} // Use the unique id as a key
                            className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
