@@ -4,8 +4,7 @@ import Button from './components/Button';
 import Input from './components/Input';
 import Card from './components/Card';
 import Badge from './components/Badge';
-import Select from './components/Select'; 
-import { compareAsc, parseISO } from 'date-fns';
+import Select from './components/Select';
 import { FaTrash, FaRegCalendarAlt, FaPencilAlt } from 'react-icons/fa';
 
 function App() {
@@ -29,6 +28,11 @@ function App() {
    const handleBadgeClick = (badgeText) => {
    setSelectedBadge(badgeText);
    setFilter(badgeText);
+   };
+
+   const handleSetCategory = (value) => {
+      const noSpaces = value.replace(/\s/g, '');
+      setCategory(noSpaces);
    };
 
    const [editingTodo, setEditingTodo] = useState(null);
@@ -158,8 +162,8 @@ function App() {
                 </div>
                 <div className="flex-1 min-w-130px m-2">
                   <Input 
-                    value={category} 
-                    setValue={setCategory} 
+                     value={category} 
+                     setValue={handleSetCategory} 
                     size="130px"
                     placeholder="Category" 
                   />
