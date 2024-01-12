@@ -60,22 +60,23 @@ function App() {
 
 
    const sortedTodos = [...todos].sort((a, b) => {
-      // First sort by completed status
-      if (a.completed !== b.completed) {
-         return a.completed ? 1 : -1;
-      }
-      // If both tasks have the same completed status, sort based on the selected option
-      switch (sortOption) {
-         case 'Due Date':
-            const dateComparison = compareAsc(parseISO(a.dueDate), parseISO(b.dueDate));
-            return dateComparison !== 0 ? dateComparison : a.id - b.id;
-         case 'Category':
-            const categoryComparison = a.category.localeCompare(b.category);
-            return categoryComparison !== 0 ? categoryComparison : a.id - b.id;
-         // Add more cases if you have more sort options
-         default:
-            return 0; // No sorting
-      }
+     // First sort by completed status
+     if (a.completed !== b.completed) {
+        return a.completed ? 1 : -1;
+     }
+     // If both tasks have the same completed status, sort based on the selected option
+     switch (sortOption) {
+        case 'Due Date':
+           const dateA = new Date(a.dueDate);
+           const dateB = new Date(b.dueDate);
+           return dateA - dateB || a.id - b.id;
+        case 'Category':
+           const categoryComparison = a.category.localeCompare(b.category);
+           return categoryComparison !== 0 ? categoryComparison : a.id - b.id;
+        // Add more cases if you have more sort options
+        default:
+           return 0; // No sorting
+     }
    });
 
    const completedTodos = sortedTodos.filter(todo => todo.completed);
