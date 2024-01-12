@@ -3,7 +3,8 @@ import Checkbox from './components/Checkbox';
 import Button from './components/Button';
 import Input from './components/Input';
 import Card from './components/Card';
-import Badge from './components/Badge'; // Import the Badge component
+import Badge from './components/Badge';
+import Select from './components/Select'; 
 import { FaTrash, FaRegCalendarAlt, FaPencilAlt } from 'react-icons/fa';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
    const [dueDate, setDueDate] = useState('');
    const [category, setCategory] = useState('');
    const [filter, setFilter] = useState('All'); 
+   const sortOptions = ['Date', 'Category'];
 
    const [selectedBadge, setSelectedBadge] = useState('All');
 
@@ -160,8 +162,11 @@ function App() {
             </div>
                   <div>
                   <div style={{ marginTop: '20px' }}>
-                  <h2 style={{ fontSize: '2em' }}>Todo Items</h2>
-                     {uncompletedTodos.filter(isTodoVisible).map((todo) => (
+                  <div className="flex justify-between items-center mb-4">
+                     <h2 className="text-2xl">Todo Items</h2>
+                     <Select items={sortOptions} onItemSelected={(item) => console.log(item)} />
+                  </div>                 
+                  {uncompletedTodos.filter(isTodoVisible).map((todo) => (
                         <div 
                            key={todo.id} // Use the unique id as a key
                            className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
