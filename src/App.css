@@ -65,3 +65,18 @@
   flex: 1 0 200px;
   margin: 10px;
 }
+
+.app {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-card, .stats-card {
+  width: 45%;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.stats-card {
+  margin-left: 10px;
+}

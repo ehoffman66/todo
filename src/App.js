@@ -143,7 +143,9 @@ function App() {
    return (
       <div className="font-sans bg-brand-gray min-h-screen">
         <div className="container mx-auto px-4 py-8">
-          <Card heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+               <div>
+               <Card heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
             <div>
               <form onSubmit={addTodo} className="flex flex-wrap items-center mb-4">
                 <div className="flex-1 min-w-300px m-2">
@@ -273,6 +275,21 @@ function App() {
                   </div>
                </div>
             }/>
+               </div>
+               <div style={{ alignSelf: 'flex-start', marginLeft: '20px' }}>
+                  <Card 
+                     heading={<span style={{ fontSize: '2em' }}>STATISTICS</span>} 
+                     paragraph={
+                        <div>
+                           <p>Total Todos: {todos.length}</p>
+                           <p>Completed Todos: {todos.filter(todo => todo.completed).length}</p>
+                           <p>Uncompleted Todos: {todos.filter(todo => !todo.completed).length}</p>
+                           <p>Unique Categories: {new Set(todos.map(todo => todo.category)).size}</p>
+                        </div>
+                     }
+                  />
+               </div>
+            </div>
          </div>
       </div>
    );
