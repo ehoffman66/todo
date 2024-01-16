@@ -52,19 +52,32 @@ function App() {
    const handleEditClick = (todo) => {
       setEditingTodo(todo);
       setEditText(todo.text);
-      setEditCategory(todo.category); // Make sure this line is present
-      setEditDueDate(todo.dueDate);
+      setEditCategory(todo.category);
+      if (todo.dueDate) {
+         const dueDate = new Date(todo.dueDate);
+         const year = dueDate.getFullYear();
+         const month = String(dueDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed in JavaScript
+         const day = String(dueDate.getDate()).padStart(2, '0');
+         setEditDueDate(`${year}-${month}-${day}`);
+      } else {
+         setEditDueDate('');
+      }
    };
 
    const handleUpdateTodo = (id, newText, newCategory, newDueDate) => {
       setTodos(todos.map(todo => 
          todo.id === id 
-            ? { ...todo, text: newText, category: newCategory, dueDate: newDueDate } 
+            ? { 
+                  ...todo, 
+                  text: newText, 
+                  category: newCategory, 
+                  dueDate: newDueDate ? new Date(newDueDate + 'T00:00') : null 
+               } 
             : todo
       ));
       setEditingTodo(null);
       setEditText('');
-      setEditCategory(''); // Make sure this line is present
+      setEditCategory('');
       setEditDueDate('');
    };
 
@@ -100,8 +113,8 @@ function App() {
       if (!task.trim()) return;
       let localDueDate = '';
       if (dueDate) {
-         const [year, month, day] = dueDate.split('-');
-         localDueDate = new Date(year, month - 1, day);
+         // Save the date as a string in the format 'YYYY-MM-DD'
+         localDueDate = dueDate;
       }
       const newTodo = {
          id: Date.now(),
