@@ -113,20 +113,28 @@ function App() {
 
    const addTodo = (e) => {
       e.preventDefault();
-      if (!task.trim()) return;
       let localDueDate = '';
       if (dueDate) {
          // Create a new Date object in the local timezone
          localDueDate = new Date(dueDate + 'T00:00');
       }
-      const newTodo = {
-         id: Date.now(),
-         text: task,
-         completed: false,
-         dueDate: localDueDate,
-         category
-      };
-      setTodos([...todos, newTodo]);
+      if (editingTodo) {
+         // Update the todo being edited
+         setTodos(todos.map(todo => 
+            todo.id === editingTodo.id ? { ...todo, text: task, dueDate: localDueDate, category } : todo
+         ));
+         setEditingTodo(null);
+      } else {
+         // Add a new todo
+         const newTodo = {
+            id: Date.now(),
+            text: task,
+            completed: false,
+            dueDate: localDueDate,
+            category
+         };
+         setTodos([...todos, newTodo]);
+      }
       setTask('');
       setDueDate('');
       setCategory('');
