@@ -20,6 +20,7 @@ function App() {
    // Add new state variables
    const [editCategory, setEditCategory] = useState("");
    const [editDueDate, setEditDueDate] = useState("");
+   const categories = [...new Set(todos.map(todo => todo.category || "Blank"))];
 
    const [task, setTask] = useState('');
    const [dueDate, setDueDate] = useState('');
@@ -210,8 +211,14 @@ function App() {
                   <Badge badgeText="Overdue" onClick={handleBadgeClick} isSelected={'Overdue' === selectedBadge} className="my-10" />
                   <Badge badgeText="Tomorrow" onClick={handleBadgeClick} isSelected={'Tomorrow' === selectedBadge} className="my-10" />
                   <span style={{ margin: '0 10px' }}></span>
-                  {uniqueCategories.map(category => (
-                     <Badge key={category} badgeText={category} onClick={handleBadgeClick} isSelected={category === selectedBadge} className="my-10" />
+                  {categories.map((category, index) => (
+                     <Badge 
+                        key={index} 
+                        badgeText={category}
+                        onClick={() => handleBadgeClick(category === "Blank" ? "" : category)}
+                        isSelected={category === selectedBadge}
+                        className="my-10"
+                     />
                   ))}
                </div>
                      <div>
