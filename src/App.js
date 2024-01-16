@@ -17,6 +17,10 @@ function App() {
       }
    });
 
+   // Add new state variables
+   const [editCategory, setEditCategory] = useState("");
+   const [editDueDate, setEditDueDate] = useState("");
+
    const [task, setTask] = useState('');
    const [dueDate, setDueDate] = useState('');
    const [category, setCategory] = useState('');
@@ -48,12 +52,20 @@ function App() {
    const handleEditClick = (todo) => {
       setEditingTodo(todo);
       setEditText(todo.text);
+      setEditCategory(todo.category); // Make sure this line is present
+      setEditDueDate(todo.dueDate);
    };
 
-   const handleUpdateTodo = (id, newText) => {
-      setTodos(todos.map(todo => todo.id === id ? { ...todo, text: newText } : todo));
+   const handleUpdateTodo = (id, newText, newCategory, newDueDate) => {
+      setTodos(todos.map(todo => 
+         todo.id === id 
+            ? { ...todo, text: newText, category: newCategory, dueDate: newDueDate } 
+            : todo
+      ));
       setEditingTodo(null);
       setEditText('');
+      setEditCategory(''); // Make sure this line is present
+      setEditDueDate('');
    };
 
    const uniqueCategories = todos.map(todo => todo.category)
@@ -202,12 +214,26 @@ function App() {
                            >
                               <div>
                                  {editingTodo === todo ? (
-                                    <input 
-                                       value={editText} 
-                                       onChange={(e) => setEditText(e.target.value)}
-                                       onBlur={(e) => handleUpdateTodo(todo.id, e.target.value)} 
-                                       autoFocus
-                                    />
+                                    <form onSubmit={(e) => {
+                                       e.preventDefault();
+                                       handleUpdateTodo(todo.id, editText, editCategory, editDueDate);
+                                    }}>
+                                       <input 
+                                          value={editText} 
+                                          onChange={(e) => setEditText(e.target.value)}
+                                          autoFocus
+                                       />
+                                       <input 
+                                          value={editCategory} 
+                                          onChange={(e) => setEditCategory(e.target.value)}
+                                       />
+                                       <input 
+                                          type="date"
+                                          value={editDueDate} 
+                                          onChange={(e) => setEditDueDate(e.target.value)}
+                                       />
+                                       <button type="submit">Save</button>
+                                    </form>
                                  ) : (
                                     <Checkbox 
                                        item={todo.text} 
