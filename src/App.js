@@ -116,8 +116,8 @@ function App() {
       if (!task.trim()) return;
       let localDueDate = '';
       if (dueDate) {
-         // Save the date as a string in the format 'YYYY-MM-DD'
-         localDueDate = dueDate;
+         // Create a new Date object in the local timezone
+         localDueDate = new Date(dueDate + 'T00:00');
       }
       const newTodo = {
          id: Date.now(),
