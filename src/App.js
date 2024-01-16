@@ -8,47 +8,49 @@ import Select from './components/Select';
 import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
 
 function App() {
+   // State variables for todos
    const [todos, setTodos] = useState(() => {
       const savedTodos = localStorage.getItem('todos');
-      if (savedTodos) {
-         return JSON.parse(savedTodos);
-      } else {
-         return [];
-      }
+      return savedTodos ? JSON.parse(savedTodos) : [];
    });
 
-   // Add new state variables
-   const [editCategory, setEditCategory] = useState("");
-   const [editDueDate, setEditDueDate] = useState("");
-   const categories = [...new Set(todos.map(todo => todo.category || "Blank"))];
-
+   // State variables for new todo
    const [task, setTask] = useState('');
    const [dueDate, setDueDate] = useState('');
    const [category, setCategory] = useState('');
-   const [filter, setFilter] = useState('All'); 
-   const sortOptions = ['Date', 'Category'];
 
+   // State variables for filters and sorting
+   const [filter, setFilter] = useState('All'); 
+   const [sortOption, setSortOption] = useState('Due Date');
    const [selectedBadge, setSelectedBadge] = useState('All');
 
+   // State variables for editing todo
+   const [editingTodo, setEditingTodo] = useState(null);
+   const [editText, setEditText] = useState('');
+   const [editCategory, setEditCategory] = useState("");
+   const [editDueDate, setEditDueDate] = useState("");
+
+   // Function to handle badge click
    const handleBadgeClick = (badgeText) => {
-   setSelectedBadge(badgeText);
-   setFilter(badgeText);
+      setSelectedBadge(badgeText);
+      setFilter(badgeText);
    };
 
+   // Function to handle category change
    const handleSetCategory = (value) => {
       const noSpaces = value.replace(/\s/g, '').toLowerCase();
       setCategory(noSpaces);
    };
 
-   const [editingTodo, setEditingTodo] = useState(null);
+   const sortOptions = ['Due Date', 'Category', 'Completed', 'Uncompleted'];
 
-   const [editText, setEditText] = useState('');
-
-   const [sortOption, setSortOption] = useState('Due Date');
-
+   // Function to handle sort option change
    const handleSortOptionChange = (option) => {
-   setSortOption(option);
-   }
+      setSortOption(option);
+   };
+
+   // Get unique categories for badges
+   const categories = [...new Set(todos.map(todo => todo.category || "Blank"))];
 
    const handleEditClick = (todo) => {
       setEditingTodo(todo);
