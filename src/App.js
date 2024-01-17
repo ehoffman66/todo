@@ -336,7 +336,7 @@ function App() {
                   </div>
                   <div>
                      <Card 
-                        heading={<span style={{ fontSize: '2em' }}>STATISTICS</span>} 
+                        heading={<span style={{ fontSize: '2em' }}>STATS</span>} 
                         paragraph={
                         <div>
                            <p>Total Todos: {todos.length}</p>
