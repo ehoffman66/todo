@@ -334,24 +334,38 @@ function App() {
                   </div>
                }/>
                   </div>
-                  <div>
-                     <Card 
-                        heading={<span style={{ fontSize: '2em' }}>STATS</span>} 
-                        paragraph={
-                           <div>
-                              <p>Total Todos: {todos.length}</p>
-                              <p>Completed Todos: {todos.filter(todo => todo.completed).length}</p>
-                              <p>Uncompleted Todos: {todos.filter(todo => !todo.completed).length}</p>
-                              <p>Unique Categories: {new Set(todos.map(todo => todo.category)).size}</p>
-                           </div>
-                        }
-                        size="xl:w-full" 
-                     />
+                  <div className="">
+                     <div className="side-cards flex flex-col">
+                        <div className="stats-card">
+                           <Card 
+                              heading={<span style={{ fontSize: '2em' }}>STATS</span>} 
+                              paragraph={
+                                 <div>
+                                    <p>Total Todos: {todos.length}</p>
+                                    <p>Completed Todos: {todos.filter(todo => todo.completed).length}</p>
+                                    <p>Uncompleted Todos: {todos.filter(todo => !todo.completed).length}</p>
+                                    <p>Unique Categories: {new Set(todos.map(todo => todo.category)).size}</p>
+                                 </div>
+                              }
+                              size="xl:w-full" 
+                           />
+                        </div>
+                        <div className="settings-card mt-4">
+                           <Card 
+                              heading={<span style={{ fontSize: '2em' }}>SETTINGS</span>} 
+                              paragraph={
+                                 <div>
+                                    {/* Add your settings content here */}
+                                 </div>
+                              }
+                              size="xl:w-full"
+                           />
+                        </div>  
+                     </div>
                   </div>
                </div>
             </div>
          </div>
-      
    );
 }
 
