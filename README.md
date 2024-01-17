@@ -6,7 +6,7 @@ This is a simple and efficient Todo application built with React. The applicatio
 
 The application is hosted at [brutaltasks.com](http://brutaltasks.com)
 
-![Todo App GIF](public/images/your-image.gif)
+![Todo App GIF](https://github.com/ehoffman66/todo/blob/main/public/images/tasks.gif)
 
 ## Getting Started
 
