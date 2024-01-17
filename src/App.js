@@ -14,6 +14,15 @@ function App() {
       return savedTodos ? JSON.parse(savedTodos) : [];
    });
 
+   const [hideCompleted, setHideCompleted] = useState(() => {
+      const savedHideCompleted = localStorage.getItem('hideCompleted');
+      return savedHideCompleted ? JSON.parse(savedHideCompleted) : false;
+   });
+
+   useEffect(() => {
+      localStorage.setItem('hideCompleted', JSON.stringify(hideCompleted));
+    }, [hideCompleted]);
+
    // State variables for new todo
    const [task, setTask] = useState('');
    const [dueDate, setDueDate] = useState('');
@@ -295,6 +304,7 @@ function App() {
                      </div>
 
                      <div>
+                     {!hideCompleted && (
                      <div style={{ marginTop: '50px' }}>
                         {!(selectedBadge === 'Today' || selectedBadge === 'Overdue' || selectedBadge === 'Tomorrow') && (
                            <h2 className="text-2xl font-bold mb-4">Completed Tasks</h2>
@@ -330,6 +340,7 @@ function App() {
                               )
                         )}
                      </div>
+                     )}
                      </div>
                   </div>
                }/>
@@ -354,13 +365,19 @@ function App() {
                            <Card 
                               heading={<span style={{ fontSize: '2em' }}>SETTINGS</span>} 
                               paragraph={
-                                 <div>
-                                    {/* Add your settings content here */}
+                                 <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Checkbox 
+                                       item={hideCompleted} 
+                                       checked={hideCompleted} 
+                                       onChange={() => setHideCompleted(!hideCompleted)} 
+                                       style={{ fontSize: '5.2em' }}
+                                    />
+                                    <span style={{ marginLeft: '10px' }}>Hide Completed</span>
                                  </div>
                               }
                               size="xl:w-full"
                            />
-                        </div>  
+                        </div>
                      </div>
                   </div>
                </div>
