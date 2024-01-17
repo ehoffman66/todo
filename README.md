@@ -2,6 +2,10 @@
 
 This is a simple and efficient Todo application built with React. The application allows users to add, complete, update and delete tasks.
 
+## Website
+
+The application is hosted at [brutaltasks.com](http://brutaltasks.com)
+
 ## Getting Started
 
 ### Prerequisites
