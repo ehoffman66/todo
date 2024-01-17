@@ -1,10 +1,8 @@
 # Todo Application
 
-This is a simple and efficient Todo application built with React. The application allows users to add, complete, and delete tasks.
+This is a simple and efficient Todo application built with React. The application allows users to add, complete, update and delete tasks.
 
 ## Getting Started
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Prerequisites
 
@@ -14,10 +12,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### Installation
 
 1. Clone the repository:
-git clone https://github.com/yourusername/todo-app.git
+git clone https://github.com/ehoffman66/todo.git
 
 2. Navigate to the project directory:
-cd todo-app
+cd todo
 
 3. Install the dependencies:
 npm install
@@ -53,6 +51,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Features
 
 - Add new tasks
+- Edit Tasks
 - Mark tasks as completed
 - Delete tasks
 
@@ -64,4 +63,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License.
 
-Please replace "https://github.com/yourusername/todo-app.git" with the actual URL of your repository.
+Please replace "https://github.com/ehoffman66/todo.git" with the actual URL of your repository.
