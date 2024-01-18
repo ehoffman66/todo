@@ -23,8 +23,17 @@ function App() {
       localStorage.setItem('hideCompleted', JSON.stringify(hideCompleted));
     }, [hideCompleted]);
 
-   const [cardColor, setCardColor] = useState('#bc95d4');
-   const colorOptions = ['#bc95d4', 'white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow'];
+
+   const [cardColor, setCardColor] = useState(() => {
+      const savedColor = localStorage.getItem('cardColor');
+      return savedColor ? savedColor : '#bc95d4';
+   });
+
+   useEffect(() => {
+      localStorage.setItem('cardColor', cardColor);
+   }, [cardColor]);
+
+   const colorOptions = ['#bc95d4', '#6CD3BF', 'white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow'];
 
    // State variables for new todo
    const [task, setTask] = useState('');
@@ -267,7 +276,7 @@ function App() {
                      <div style={{ marginTop: '20px' }}>
                      <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl">Todo Items</h2>
-                        <Select items={sortOptions} onItemSelected={handleSortOptionChange} />                
+                        <Select items={sortOptions} onItemSelected={handleSortOptionChange} color={cardColor} />               
                         </div>                 
                      {sortedTodos.filter(todo => !todo.completed && isTodoVisible(todo)).map((todo) => (
                            <div 

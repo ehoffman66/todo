@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 
-const Select = ({ items, onItemSelected }) => {
+const Select = ({ items, onItemSelected, color }) => {
   const [isActiveSelect, setIsActiveSelect] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
 
@@ -17,6 +17,7 @@ const Select = ({ items, onItemSelected }) => {
         role="combobox"
         aria-controls="select-list"
         aria-expanded={isActiveSelect}
+        style={{ backgroundColor: color || '#bc95d4' }}
         onClick={() => {
             setIsActiveSelect(!isActiveSelect)
         }}
