@@ -167,7 +167,18 @@ function App() {
    };
 
    const toggleCompletion = (id) => {
-      setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
+      setTodos(todos.map(todo => {
+         if (todo.id === id) {
+            const isCompleted = !todo.completed;
+            return {
+               ...todo,
+               completed: isCompleted,
+               // Set completedAt to current date and time if completed, null otherwise
+               completedAt: isCompleted ? new Date().toISOString() : null,
+            };
+         }
+         return todo;
+      }));
    };
 
    const isTodoVisible = (todo) => {
