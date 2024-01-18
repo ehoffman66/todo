@@ -173,7 +173,6 @@ function App() {
             return {
                ...todo,
                completed: isCompleted,
-               // Set completedAt to current date and time if completed, null otherwise
                completedAt: isCompleted ? new Date().toISOString() : null,
             };
          }
