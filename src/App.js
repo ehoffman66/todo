@@ -23,6 +23,9 @@ function App() {
       localStorage.setItem('hideCompleted', JSON.stringify(hideCompleted));
     }, [hideCompleted]);
 
+   const [cardColor, setCardColor] = React.useState('ba95d4');
+   const colorOptions = ['white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow'];
+
    // State variables for new todo
    const [task, setTask] = useState('');
    const [dueDate, setDueDate] = useState('');
@@ -190,7 +193,7 @@ function App() {
         <div className="container mx-auto px-3 py-8">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-3/4 md:mr-4 mb-2 md:mb-0">
-              <Card heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
+              <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
                 <div>
                      <form onSubmit={addTodo} className="flex flex-wrap items-center mb-4">
                      <div className="flex-1 min-w-300px m-2">
@@ -349,6 +352,7 @@ function App() {
                      <div className="side-cards flex flex-col">
                         <div className="stats-card">
                            <Card 
+                              backgroundColor={cardColor}
                               heading={<span style={{ fontSize: '2em' }}>STATS</span>} 
                               paragraph={
                                  <div>
@@ -363,17 +367,32 @@ function App() {
                         </div>
                         <div className="settings-card mt-4">
                            <Card 
+                              backgroundColor={cardColor}
                               heading={<span style={{ fontSize: '2em' }}>SETTINGS</span>} 
                               paragraph={
-                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <Checkbox 
-                                       item={hideCompleted} 
-                                       checked={hideCompleted} 
-                                       onChange={() => setHideCompleted(!hideCompleted)} 
-                                       style={{ fontSize: '5.2em' }}
-                                    />
-                                    <span style={{ marginLeft: '10px' }}>Hide Completed</span>
-                                 </div>
+                                 <>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                       <Checkbox 
+                                          item={hideCompleted} 
+                                          checked={hideCompleted} 
+                                          onChange={() => setHideCompleted(!hideCompleted)} 
+                                          style={{ fontSize: '5.2em' }}
+                                       />
+                                       <span style={{ marginLeft: '10px' }}>Hide Completed</span>
+                                    </div>
+                                    <div>
+                                       <label>Card Color</label>
+                                       <div>
+                                          {colorOptions.map(color => (
+                                             <button 
+                                                key={color} 
+                                                style={{ backgroundColor: color, height: '20px', width: '20px', border: '1px solid black', borderRadius: '50%' }} 
+                                                onClick={() => setCardColor(color)}
+                                             />
+                                          ))}
+                                       </div>
+                                    </div>
+                                 </>
                               }
                               size="xl:w-full"
                            />
