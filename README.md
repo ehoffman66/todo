@@ -61,6 +61,14 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 - Mark tasks as completed
 - Delete tasks
 
+## Upcoming Features
+
+- Labels
+- Sharing
+- Secure Login
+- Todos Stored in DB
+- Mobile App
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
