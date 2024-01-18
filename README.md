@@ -56,17 +56,17 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Features
 
-- Add new tasks
-- Edit Tasks
+- Add/Udpate/Delete Tasks
 - Mark tasks as completed
-- Delete tasks
+- Filter Tasks
+- Hide completed tasks
 
 ## Upcoming Features
 
 - Labels
-- Sharing
-- Secure Login
-- Todos Stored in DB
+- Sharing Tasks
+- Secure Login (Google)
+- Todos Stored for login
 - Mobile App
 
 ## Contributing
