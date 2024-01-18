@@ -223,7 +223,7 @@ function App() {
                         />
                      </div>
                      <div className="m-2">
-                        <Button type="submit">
+                        <Button type="submit" color={cardColor}>
                            <FaPlus />
                         </Button>
                      </div>
@@ -314,10 +314,10 @@ function App() {
                                  </div>
                               </div>
                               <div style={{ display: 'flex', justifyContent: 'space-between', width: '80px' }}>
-                                 <Button onClick={() => handleEditClick(todo)} style={{ marginRight: '10px' }}>
+                                 <Button onClick={() => handleEditClick(todo)} style={{ marginRight: '10px' }} color={cardColor}>
                                     <FaPencilAlt />
                                  </Button>
-                                 <Button onClick={() => deleteTodo(todo.id)}>
+                                 <Button onClick={() => deleteTodo(todo.id)} color={cardColor}>
                                     <FaTrash />
                                  </Button>
                               </div>
