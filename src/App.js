@@ -299,16 +299,16 @@ function App() {
                                        e.preventDefault();
                                        handleUpdateTodo(todo.id, editText, editCategory, editDueDate);
                                     }}>
-                                       <input 
+                                       <Input 
                                           value={editText} 
                                           onChange={(e) => setEditText(e.target.value)}
                                           autoFocus
                                        />
-                                       <input 
+                                       <Input 
                                           value={editCategory} 
                                           onChange={(e) => setEditCategory(e.target.value)}
                                        />
-                                       <input 
+                                       <Input 
                                           type="date"
                                           value={editDueDate} 
                                           onChange={(e) => setEditDueDate(e.target.value)}
