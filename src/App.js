@@ -23,8 +23,8 @@ function App() {
       localStorage.setItem('hideCompleted', JSON.stringify(hideCompleted));
     }, [hideCompleted]);
 
-   const [cardColor, setCardColor] = React.useState('ba95d4');
-   const colorOptions = ['white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow'];
+   const [cardColor, setCardColor] = useState('#bc95d4');
+   const colorOptions = ['#bc95d4', 'white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow'];
 
    // State variables for new todo
    const [task, setTask] = useState('');
@@ -46,6 +46,7 @@ function App() {
    const handleBadgeClick = (badgeText) => {
       setSelectedBadge(badgeText);
       setFilter(badgeText);
+      console.log(badgeText);
    };
 
    // Function to handle category change
@@ -228,11 +229,30 @@ function App() {
                      </div>
                      </form>
                <div className="mb-4 flex flex-wrap space-x-2">
-                  <Badge badgeText="All" onClick={handleBadgeClick} isSelected={'All' === selectedBadge} className="my-10" />
-                  <Badge badgeText="Today" onClick={handleBadgeClick} isSelected={'Today' === selectedBadge} className="my-10" />
-                  <Badge badgeText="Overdue" onClick={handleBadgeClick} isSelected={'Overdue' === selectedBadge} className="my-10" />
-                  <Badge badgeText="Tomorrow" onClick={handleBadgeClick} isSelected={'Tomorrow' === selectedBadge} className="my-10" />
-                  <span style={{ margin: '0 10px' }}></span>
+                  <Badge 
+                     key="All" 
+                     badgeText="All"
+                     isSelected={selectedBadge === "All"}
+                     onClick={() => handleBadgeClick("All")}
+                  />
+                  <Badge 
+                     key="Today" 
+                     badgeText="Today"
+                     isSelected={selectedBadge === "Today"}
+                     onClick={() => handleBadgeClick("Today")}
+                  />
+                  <Badge 
+                     key="Tomorrow" 
+                     badgeText="Tomorrow"
+                     isSelected={selectedBadge === "Tomorrow"}
+                     onClick={() => handleBadgeClick("Tomorrow")}
+                  />
+                  <Badge 
+                     key="Overdue" 
+                     badgeText="Overdue"
+                     isSelected={selectedBadge === "Overdue"}
+                     onClick={() => handleBadgeClick("Overdue")}
+                  />                  <span style={{ margin: '0 10px' }}></span>
                   {categories.map((category, index) => (
                      <Badge 
                         key={index} 
@@ -382,12 +402,14 @@ function App() {
                                     </div>
                                     <div>
                                        <label>Card Color</label>
-                                       <div>
+                                       <div style={{ display: 'flex', gap: '10px' }}>
                                           {colorOptions.map(color => (
-                                             <button 
+                                             <Badge 
                                                 key={color} 
-                                                style={{ backgroundColor: color, height: '20px', width: '20px', border: '1px solid black', borderRadius: '50%' }} 
-                                                onClick={() => setCardColor(color)}
+                                                badgeColor={color}
+                                                badgeText=''
+                                                isSelected={cardColor === color}
+                                                onClick={setCardColor}
                                              />
                                           ))}
                                        </div>
