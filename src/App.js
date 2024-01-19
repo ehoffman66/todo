@@ -304,28 +304,31 @@ function App() {
                                           <Input 
                                              value={editText} 
                                              onChange={(e) => setEditText(e.target.value)}
-                                             size="300px"
+                                             size="320px"
                                              autoFocus
                                              style={{ marginBottom: '10px' }}
                                           />
-                                          <Input 
-                                             type="date"
-                                             size="150px"
-                                             value={editDueDate} 
-                                             onChange={(e) => setEditDueDate(e.target.value)}
-                                             style={{ marginBottom: '10px' }}
-                                          />
-                                          <Input 
-                                             value={editCategory} 
-                                             size="150px"
-                                             onChange={(e) => setEditCategory(e.target.value)}
-                                             style={{ marginBottom: '10px' }}
-                                          />
+                                          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                                             <Input 
+                                                type="date"
+                                                size="150px"
+                                                value={editDueDate} 
+                                                onChange={(e) => setEditDueDate(e.target.value)}
+                                                style={{ marginBottom: '10px', marginRight: '10px' }}
+                                             />
+                                             <Input 
+                                                value={editCategory} 
+                                                size="150px"
+                                                onChange={(e) => setEditCategory(e.target.value)}
+                                                style={{ marginBottom: '10px' }}
+                                             />
+                                          </div>
                                        </div>
-                                       <Button color={cardColor} type="submit" style={{ marginTop: '10px' }}>
+                                       <Button color={cardColor} type="submit" style={{ marginTop: '10px', marginBottom: '10px' }}>
                                           <FiSave />
-                                           Save
-                                       </Button>                                    </form>
+                                          Save
+                                       </Button>
+                                    </form>
                                  ) : (
                                     <Checkbox 
                                        item={todo.text} 
