@@ -8,6 +8,7 @@ import Select from './components/Select';
 import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { FiSave } from 'react-icons/fi';
 import SettingsCard from './components/SettingsCard';
+import StatsCard from './components/StatsCard';
 
 function App() {
    // State variables for todos
@@ -215,82 +216,82 @@ function App() {
         <div className="container mx-auto px-3 py-8">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-3/4 md:mr-4 mb-2 md:mb-0">
-              <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
-                <div>
+               <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
+                  <div>
                      <form onSubmit={addTodo} className="flex flex-wrap items-center mb-4">
-                     <div className="flex-1 min-w-300px m-2">
-                        <Input 
-                           value={task} 
-                           setValue={setTask} 
-                           size="300px"
-                           placeholder="Add a new task" 
-                        />
-                     </div>
-                     <div className="flex-1 min-w-130px m-2">
-                        <Input 
-                           value={category} 
-                           setValue={handleSetCategory} 
-                           size="130px"
-                           placeholder="Category" 
-                        />
-                     </div>
-                     <div className="flex-1 min-w-150px m-2">
-                        <Input 
-                           type="date"
-                           value={dueDate} 
-                           setValue={setDueDate}
-                           size="150px"
-                           placeholder="Due date" 
-                        />
-                     </div>
-                     <div className="m-2">
-                        <Button type="submit" color={cardColor}>
-                           <FaPlus />
-                        </Button>
-                     </div>
+                        <div className="flex-1 min-w-300px m-2">
+                           <Input 
+                              value={task} 
+                              setValue={setTask} 
+                              size="300px"
+                              placeholder="Add a new task" 
+                           />
+                        </div>
+                        <div className="flex-1 min-w-130px m-2">
+                           <Input 
+                              value={category} 
+                              setValue={handleSetCategory} 
+                              size="130px"
+                              placeholder="Category" 
+                           />
+                        </div>
+                        <div className="flex-1 min-w-150px m-2">
+                           <Input 
+                              type="date"
+                              value={dueDate} 
+                              setValue={setDueDate}
+                              size="150px"
+                              placeholder="Due date" 
+                           />
+                        </div>
+                        <div className="m-2">
+                           <Button type="submit" color={cardColor}>
+                              <FaPlus />
+                           </Button>
+                        </div>
                      </form>
-               <div className="mb-4 flex flex-wrap space-x-2">
-                  <Badge 
-                     key="All" 
-                     badgeText="All"
-                     isSelected={selectedBadge === "All"}
-                     onClick={() => handleBadgeClick("All")}
-                  />
-                  <Badge 
-                     key="Today" 
-                     badgeText="Today"
-                     isSelected={selectedBadge === "Today"}
-                     onClick={() => handleBadgeClick("Today")}
-                  />
-                  <Badge 
-                     key="Tomorrow" 
-                     badgeText="Tomorrow"
-                     isSelected={selectedBadge === "Tomorrow"}
-                     onClick={() => handleBadgeClick("Tomorrow")}
-                  />
-                  <Badge 
-                     key="Overdue" 
-                     badgeText="Overdue"
-                     isSelected={selectedBadge === "Overdue"}
-                     onClick={() => handleBadgeClick("Overdue")}
-                  />                  <span style={{ margin: '0 10px' }}></span>
-                  {categories.map((category, index) => (
-                     <Badge 
-                        key={index} 
-                        badgeText={category}
-                        onClick={() => handleBadgeClick(category === "Blank" ? "" : category)}
-                        isSelected={category === selectedBadge}
-                        className="my-10"
-                     />
-                  ))}
-               </div>
-                     <div>
+                     <div className="mb-4 flex flex-wrap space-x-2">
+                        <Badge 
+                           key="All" 
+                           badgeText="All"
+                           isSelected={selectedBadge === "All"}
+                           onClick={() => handleBadgeClick("All")}
+                        />
+                        <Badge 
+                           key="Today" 
+                           badgeText="Today"
+                           isSelected={selectedBadge === "Today"}
+                           onClick={() => handleBadgeClick("Today")}
+                        />
+                        <Badge 
+                           key="Tomorrow" 
+                           badgeText="Tomorrow"
+                           isSelected={selectedBadge === "Tomorrow"}
+                           onClick={() => handleBadgeClick("Tomorrow")}
+                        />
+                        <Badge 
+                           key="Overdue" 
+                           badgeText="Overdue"
+                           isSelected={selectedBadge === "Overdue"}
+                           onClick={() => handleBadgeClick("Overdue")}
+                        />                  <span style={{ margin: '0 10px' }}></span>
+                        {categories.map((category, index) => (
+                           <Badge 
+                              key={index} 
+                              badgeText={category}
+                              onClick={() => handleBadgeClick(category === "Blank" ? "" : category)}
+                              isSelected={category === selectedBadge}
+                              className="my-10"
+                           />
+                        ))}
+                  </div>
+                  <div>
                      <div style={{ marginTop: '20px' }}>
                      <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl">Todo Items</h2>
                         <Select items={sortOptions} onItemSelected={handleSortOptionChange} color={cardColor} />               
                         </div>                 
-                     {sortedTodos.filter(todo => !todo.completed && isTodoVisible(todo)).map((todo) => (
+                           {sortedTodos.filter(todo => !todo.completed && isTodoVisible(todo)).map((todo) => (
                            <div 
                               key={todo.id}
                               className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
@@ -405,18 +406,9 @@ function App() {
                   <div className="">
                      <div className="side-cards flex flex-col">
                         <div className="stats-card">
-                           <Card 
-                              backgroundColor={cardColor}
-                              heading={<span style={{ fontSize: '2em' }}>STATS</span>} 
-                              paragraph={
-                                 <div>
-                                    <p>Total Todos: {todos.length}</p>
-                                    <p>Completed Todos: {todos.filter(todo => todo.completed).length}</p>
-                                    <p>Uncompleted Todos: {todos.filter(todo => !todo.completed).length}</p>
-                                    <p>Unique Categories: {new Set(todos.map(todo => todo.category)).size}</p>
-                                 </div>
-                              }
-                              size="xl:w-full" 
+                           <StatsCard 
+                              todos={todos}
+                              cardColor={cardColor}
                            />
                         </div>
                         <div className="settings-card mt-4">
