@@ -6,6 +6,7 @@ import Card from './components/Card';
 import Badge from './components/Badge';
 import Select from './components/Select';
 import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
+import { FiSave } from 'react-icons/fi';
 
 function App() {
    // State variables for todos
@@ -299,22 +300,32 @@ function App() {
                                        e.preventDefault();
                                        handleUpdateTodo(todo.id, editText, editCategory, editDueDate);
                                     }}>
-                                       <Input 
-                                          value={editText} 
-                                          onChange={(e) => setEditText(e.target.value)}
-                                          autoFocus
-                                       />
-                                       <Input 
-                                          value={editCategory} 
-                                          onChange={(e) => setEditCategory(e.target.value)}
-                                       />
-                                       <Input 
-                                          type="date"
-                                          value={editDueDate} 
-                                          onChange={(e) => setEditDueDate(e.target.value)}
-                                       />
-                                       <button type="submit">Save</button>
-                                    </form>
+                                       <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                          <Input 
+                                             value={editText} 
+                                             onChange={(e) => setEditText(e.target.value)}
+                                             size="300px"
+                                             autoFocus
+                                             style={{ marginBottom: '10px' }}
+                                          />
+                                          <Input 
+                                             type="date"
+                                             size="150px"
+                                             value={editDueDate} 
+                                             onChange={(e) => setEditDueDate(e.target.value)}
+                                             style={{ marginBottom: '10px' }}
+                                          />
+                                          <Input 
+                                             value={editCategory} 
+                                             size="150px"
+                                             onChange={(e) => setEditCategory(e.target.value)}
+                                             style={{ marginBottom: '10px' }}
+                                          />
+                                       </div>
+                                       <Button color={cardColor} type="submit" style={{ marginTop: '10px' }}>
+                                          <FiSave />
+                                           Save
+                                       </Button>                                    </form>
                                  ) : (
                                     <Checkbox 
                                        item={todo.text} 
