@@ -7,6 +7,7 @@ import Badge from './components/Badge';
 import Select from './components/Select';
 import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { FiSave } from 'react-icons/fi';
+import SettingsCard from './components/SettingsCard';
 
 function App() {
    // State variables for todos
@@ -419,37 +420,12 @@ function App() {
                            />
                         </div>
                         <div className="settings-card mt-4">
-                           <Card 
-                              backgroundColor={cardColor}
-                              heading={<span style={{ fontSize: '2em' }}>SETTINGS</span>} 
-                              paragraph={
-                                 <>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                       <Checkbox 
-                                          item={hideCompleted} 
-                                          checked={hideCompleted} 
-                                          onChange={() => setHideCompleted(!hideCompleted)} 
-                                          style={{ fontSize: '5.2em' }}
-                                       />
-                                       <span style={{ marginLeft: '10px' }}>Hide Completed</span>
-                                    </div>
-                                    <div>
-                                       <label>Card Color</label>
-                                       <div style={{ display: 'flex', gap: '10px' }}>
-                                          {colorOptions.map(color => (
-                                             <Badge 
-                                                key={color} 
-                                                badgeColor={color}
-                                                badgeText=''
-                                                isSelected={cardColor === color}
-                                                onClick={setCardColor}
-                                             />
-                                          ))}
-                                       </div>
-                                    </div>
-                                 </>
-                              }
-                              size="xl:w-full"
+                           <SettingsCard 
+                              cardColor={cardColor}
+                              hideCompleted={hideCompleted}
+                              setHideCompleted={setHideCompleted}
+                              colorOptions={colorOptions}
+                              setCardColor={setCardColor}
                            />
                         </div>
                      </div>
