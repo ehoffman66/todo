@@ -58,7 +58,6 @@ function App() {
    const handleBadgeClick = (badgeText) => {
       setSelectedBadge(badgeText);
       setFilter(badgeText);
-      console.log(badgeText);
    };
 
    // Function to handle category change
@@ -287,9 +286,9 @@ function App() {
                   </div>
                   <div>
                      <div style={{ marginTop: '20px' }}>
-                     <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-2xl">Todo Items</h2>
-                        <Select items={sortOptions} onItemSelected={handleSortOptionChange} color={cardColor} />               
+                        <div className="flex justify-between items-center mb-4">
+                           <h2 className="text-2xl">Todo Items</h2>
+                           <Select items={sortOptions} onItemSelected={handleSortOptionChange} color={cardColor} />               
                         </div>                 
                            {sortedTodos.filter(todo => !todo.completed && isTodoVisible(todo)).map((todo) => (
                            <div 
@@ -376,25 +375,25 @@ function App() {
                                     className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
                                  >
                                  <div className="md:w-1/2">
-                                       <Checkbox 
-                                          item={todo.text} 
-                                          checked={todo.completed} 
-                                          onChange={() => toggleCompletion(todo.id)}
-                                          style={{ fontSize: '5.2em' }}
-                                       />
-                                       <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
-                                          <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
-                                          <span>
-                                             {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
-                                          </span>
-                                          <span style={{ margin: '0 5px' }}>|</span>
-                                          <span>{todo.category}</span>
-                                       </div>
+                                    <Checkbox 
+                                       item={todo.text} 
+                                       checked={todo.completed} 
+                                       onChange={() => toggleCompletion(todo.id)}
+                                       style={{ fontSize: '5.2em' }}
+                                    />
+                                    <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
+                                       <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
+                                       <span>
+                                          {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
+                                       </span>
+                                       <span style={{ margin: '0 5px' }}>|</span>
+                                       <span>{todo.category}</span>
                                     </div>
-                                    <Button onClick={() => deleteTodo(todo.id)}>
-                                       <FaTrash />
-                                    </Button>
                                  </div>
+                                 <Button onClick={() => deleteTodo(todo.id)}>
+                                    <FaTrash />
+                                 </Button>
+                        </div>
                               )
                         )}
                      </div>
@@ -402,29 +401,29 @@ function App() {
                      </div>
                   </div>
                }/>
-                  </div>
-                  <div className="">
-                     <div className="side-cards flex flex-col">
-                        <div className="stats-card">
-                           <StatsCard 
-                              todos={todos}
-                              cardColor={cardColor}
-                           />
-                        </div>
-                        <div className="settings-card mt-4">
-                           <SettingsCard 
-                              cardColor={cardColor}
-                              hideCompleted={hideCompleted}
-                              setHideCompleted={setHideCompleted}
-                              colorOptions={colorOptions}
-                              setCardColor={setCardColor}
-                           />
-                        </div>
+               </div>
+               <div className="">
+                  <div className="side-cards flex flex-col">
+                     <div className="stats-card">
+                        <StatsCard 
+                           todos={todos}
+                           cardColor={cardColor}
+                        />
+                     </div>
+                     <div className="settings-card mt-4">
+                        <SettingsCard 
+                           cardColor={cardColor}
+                           hideCompleted={hideCompleted}
+                           setHideCompleted={setHideCompleted}
+                           colorOptions={colorOptions}
+                           setCardColor={setCardColor}
+                        />
                      </div>
                   </div>
                </div>
             </div>
          </div>
+      </div>
    );
 }
 
