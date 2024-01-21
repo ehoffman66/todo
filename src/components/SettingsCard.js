@@ -21,7 +21,7 @@ const SettingsCard = ({ cardColor, hideCompleted, setHideCompleted, colorOptions
           </div>
           <div>
             <label>Card Color</label>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '10px' }}>
                 {colorOptions.map(color => (
                     <Badge 
                         key={color} 
