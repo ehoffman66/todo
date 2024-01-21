@@ -21,16 +21,16 @@ const SettingsCard = ({ cardColor, hideCompleted, setHideCompleted, colorOptions
           </div>
           <div>
             <label>Card Color</label>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              {colorOptions.map(color => (
-                <Badge 
-                  key={color} 
-                  badgeColor={color}
-                  badgeText=''
-                  isSelected={cardColor === color}
-                  onClick={setCardColor}
-                />
-              ))}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                {colorOptions.map(color => (
+                    <Badge 
+                        key={color} 
+                        badgeColor={color}
+                        badgeText=''
+                        isSelected={cardColor === color}
+                        onClick={setCardColor}
+                    />
+                ))}
             </div>
           </div>
         </>

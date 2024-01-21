@@ -64,10 +64,11 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Upcoming Features
 
 - Labels
-- Sharing Tasks
 - Secure Login (Google)
-- Todos Stored for login
+- Todos Sync on All Devices
+- Sharing Tasks
 - Mobile App
+- AI Recommendations
 
 ## Contributing
 
@@ -76,5 +77,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License.
-
-Please replace "https://github.com/ehoffman66/todo.git" with the actual URL of your repository.
