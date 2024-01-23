@@ -358,7 +358,7 @@ function App() {
                                  )}
                                  <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
                                     <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
-                                    <span style={{ color: new Date(todo.dueDate) < new Date() ? 'red' : 'inherit' }}>
+                                    <span style={{ color: new Date(todo.dueDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0) ? 'red' : 'inherit' }}>
                                        {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
                                     </span>
                                     <span style={{ margin: '0 5px' }}>|</span>
