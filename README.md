@@ -63,7 +63,14 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Upcoming Features
 
+Anything you don't see on the list, but would like to see
+please send us a message.
+
 - Labels
+- Goal Tracking (Inprogress)
+- Full Application Search
+- Full Page Task View
+- Reorder Sidebars
 - Todo Desriptions
 - Secure Login (Google)
 - Todos Sync on All Devices
