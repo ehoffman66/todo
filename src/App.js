@@ -9,6 +9,7 @@ import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { FiSave } from 'react-icons/fi';
 import SettingsCard from './components/SettingsCard';
 import StatsCard from './components/StatsCard';
+import GoalsCard from './components/GoalsCard';
 
 function App() {
    // State variables for todos
@@ -21,6 +22,13 @@ function App() {
       const savedHideCompleted = localStorage.getItem('hideCompleted');
       return savedHideCompleted ? JSON.parse(savedHideCompleted) : false;
    });
+
+   const [labels, setLabels] = useState([]);
+
+   const handleSetLabels = (value) => {
+      const newLabels = value.split(',').map(label => label.trim());
+      setLabels(newLabels);
+    };
 
    useEffect(() => {
       localStorage.setItem('hideCompleted', JSON.stringify(hideCompleted));
@@ -145,7 +153,7 @@ function App() {
       if (editingTodo) {
          // Update the todo being edited
          setTodos(todos.map(todo => 
-            todo.id === editingTodo.id ? { ...todo, text: task, dueDate: localDueDate, category } : todo
+            todo.id === editingTodo.id ? { ...todo, text: task, dueDate: localDueDate, category, labels } : todo
          ));
          setEditingTodo(null);
       } else {
@@ -155,13 +163,15 @@ function App() {
             text: task,
             completed: false,
             dueDate: localDueDate,
-            category
+            category,
+            labels // Add the labels here
          };
          setTodos([...todos, newTodo]);
       }
-      setTask('');
-      setDueDate('');
+      setTask("");
       setCategory('');
+      setDueDate('');
+      setLabels([]);
    };
 
    const deleteTodo = (id) => {
@@ -243,6 +253,13 @@ function App() {
                               placeholder="Due date" 
                            />
                         </div>
+                        <Input 
+                           type="text" 
+                           placeholder="Enter labels" 
+                           value={labels.join(', ')} 
+                           setValue={handleSetLabels}
+                           size="300px"
+                        />
                         <div className="m-2">
                            <Button type="submit" color={cardColor}>
                               <FaPlus />
@@ -304,7 +321,7 @@ function App() {
                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
                                           <Input 
                                              value={editText} 
-                                             onChange={(e) => setEditText(e.target.value)}
+                                             setValue={setEditText}
                                              size="320px"
                                              autoFocus
                                              style={{ marginBottom: '10px' }}
@@ -314,13 +331,13 @@ function App() {
                                                 type="date"
                                                 size="150px"
                                                 value={editDueDate} 
-                                                onChange={(e) => setEditDueDate(e.target.value)}
+                                                setValue={setEditDueDate}
                                                 style={{ marginBottom: '10px', marginRight: '10px' }}
                                              />
                                              <Input 
                                                 value={editCategory} 
                                                 size="150px"
-                                                onChange={(e) => setEditCategory(e.target.value)}
+                                                setValue={setEditCategory}
                                                 style={{ marginBottom: '10px' }}
                                              />
                                           </div>
@@ -337,6 +354,7 @@ function App() {
                                        onChange={() => toggleCompletion(todo.id)}
                                        style={{ fontSize: '5.2em' }}
                                     />
+                                    
                                  )}
                                  <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
                                     <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
@@ -412,6 +430,15 @@ function App() {
                      </div>
                      <div className="settings-card mt-4">
                         <SettingsCard 
+                           cardColor={cardColor}
+                           hideCompleted={hideCompleted}
+                           setHideCompleted={setHideCompleted}
+                           colorOptions={colorOptions}
+                           setCardColor={setCardColor}
+                        />
+                     </div>
+                     <div className="settings-card mt-4">
+                        <GoalsCard 
                            cardColor={cardColor}
                            hideCompleted={hideCompleted}
                            setHideCompleted={setHideCompleted}
