@@ -10,6 +10,8 @@ import { FiSave } from 'react-icons/fi';
 import SettingsCard from './components/SettingsCard';
 import StatsCard from './components/StatsCard';
 import GoalsCard from './components/GoalsCard';
+import { FaTags } from 'react-icons/fa';
+import { FaListAlt } from 'react-icons/fa';
 
 function App() {
    // State variables for todos
@@ -307,10 +309,13 @@ function App() {
                         {categories.map((category, index) => (
                            <Badge 
                               key={index} 
-                              badgeText={category}
-                              onClick={() => handleBadgeClick(category === "Blank" ? "" : category)}
-                              isSelected={category === selectedBadge}
-                              className="my-10"
+                              badgeText={
+                                 <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <FaListAlt style={{ marginRight: '5px' }} /> {category}
+                                 </div>
+                              }
+                              isSelected={selectedBadge === category}
+                              onClick={() => handleBadgeClick(category)}
                            />
                         ))}
                   </div>
