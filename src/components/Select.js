@@ -36,7 +36,7 @@ const Select = ({ items, onItemSelected, color }) => {
       <ul
         id="select-list"
         style={{
-          top: isActiveSelect ? '80px' : '50px',
+          top: isActiveSelect ? '45px' : '40px',
           opacity: isActiveSelect ? '1' : '0',
           visibility: isActiveSelect ? 'visible' : 'hidden',
         }}
@@ -48,6 +48,7 @@ const Select = ({ items, onItemSelected, color }) => {
           return (
             <li
               key={index}
+              style={{ backgroundColor: color || '#bc95d4' }}
               onClick={() => {
                 handleItemClick(item)
               }}
