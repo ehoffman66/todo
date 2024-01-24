@@ -408,7 +408,7 @@ function App() {
                                        <span>{todo.category}</span>
                                     </div>
                                  </div>
-                                 <Button onClick={() => deleteTodo(todo.id)}>
+                                 <Button onClick={() => deleteTodo(todo.id)} color={cardColor}>
                                     <FaTrash />
                                  </Button>
                         </div>
