@@ -275,22 +275,35 @@ function App() {
                         />
                         <Badge 
                            key="Today" 
-                           badgeText="Today"
+                           badgeText={
+                              <div style={{ display: 'flex', alignItems: 'center' }}>
+                                 <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Today
+                              </div>
+                           }
                            isSelected={selectedBadge === "Today"}
                            onClick={() => handleBadgeClick("Today")}
                         />
                         <Badge 
                            key="Tomorrow" 
-                           badgeText="Tomorrow"
+                           badgeText={
+                              <div style={{ display: 'flex', alignItems: 'center' }}>
+                                 <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Tomorrow
+                              </div>
+                           }
                            isSelected={selectedBadge === "Tomorrow"}
                            onClick={() => handleBadgeClick("Tomorrow")}
                         />
                         <Badge 
                            key="Overdue" 
-                           badgeText="Overdue"
+                           badgeText={
+                              <div style={{ display: 'flex', alignItems: 'center' }}>
+                                 <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Overdue
+                              </div>
+                           }
                            isSelected={selectedBadge === "Overdue"}
                            onClick={() => handleBadgeClick("Overdue")}
-                        />                  <span style={{ margin: '0 10px' }}></span>
+                        />                
+                        <span style={{ margin: '0 10px' }}></span>
                         {categories.map((category, index) => (
                            <Badge 
                               key={index} 
