@@ -380,7 +380,10 @@ function App() {
                                        {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
                                     </span>
                                     <span style={{ margin: '0 5px' }}>|</span>
-                                    <span>{todo.category}</span>
+                                    <span style={{ display: 'flex', alignItems: 'center' }}>
+                                       <FaListAlt style={{ marginRight: '5px' }} />
+                                       {todo.category}
+                                    </span>
                                  </div>
                               </div>
                               <div style={{ display: 'flex', justifyContent: 'space-between', width: '80px' }}>
