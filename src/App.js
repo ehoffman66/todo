@@ -10,8 +10,9 @@ import { FiSave } from 'react-icons/fi';
 import SettingsCard from './components/SettingsCard';
 import StatsCard from './components/StatsCard';
 import GoalsCard from './components/GoalsCard';
-import { FaTags } from 'react-icons/fa';
+//import { FaTags } from 'react-icons/fa';
 import { FaListAlt } from 'react-icons/fa';
+import { FaLink } from 'react-icons/fa';
 
 function App() {
    // State variables for todos
@@ -106,11 +107,23 @@ function App() {
 
       //URLs starting with http://, https://, or ftp://
       replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gim;
-      replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+      replacedText = inputText.replace(replacePattern1, (match, url) => {
+         let displayUrl = url.replace(/(^\w+:|^)\/\//, ''); // Remove http://, https://, or ftp://
+         if (displayUrl.length > 20) {
+            displayUrl = displayUrl.substring(0, 20) + '...'; // Shorten to 12 characters and add '...'
+         }
+         return '<a href="' + url + '" target="_blank">' + displayUrl + '</a>';
+      });
 
       //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
       replacePattern2 = /(^|[^/])(www.[\S]+(\b|$))/gim;
-      replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+      replacedText = replacedText.replace(replacePattern2, (match, prefix, url) => {
+         let displayUrl = url;
+         if (displayUrl.length > 20) {
+            displayUrl = displayUrl.substring(0, 20) + '...'; // Shorten to 12 characters and add '...'
+         }
+         return prefix + '<a href="http://' + url + '" target="_blank">' + displayUrl + '</a>';
+      });
 
       //Change email addresses to mailto:: links.
       replacePattern3 = /(([a-zA-Z0-9-.])+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9]{2,5})/gim;
