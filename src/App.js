@@ -103,31 +103,18 @@ function App() {
    };
 
    function linkify(inputText) {
-      let replacedText, replacePattern1, replacePattern2, replacePattern3;
+      let replacedText, replacePattern1;
 
       //URLs starting with http://, https://, or ftp://
       replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gim;
       replacedText = inputText.replace(replacePattern1, (match, url) => {
          let displayUrl = url.replace(/(^\w+:|^)\/\//, ''); // Remove http://, https://, or ftp://
+         displayUrl = displayUrl.replace(/^www\./, ''); // Remove www.
          if (displayUrl.length > 20) {
-            displayUrl = displayUrl.substring(0, 20) + '...'; // Shorten to 12 characters and add '...'
+            displayUrl = displayUrl.substring(0, 20) + '...'; // Shorten to 20 characters and add '...'
          }
-         return '<a href="' + url + '" target="_blank">' + displayUrl + '</a>';
+         return '<a href="' + url + '" target="_blank" style="text-decoration: underline;">' + displayUrl + '</a>';
       });
-
-      //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
-      replacePattern2 = /(^|[^/])(www.[\S]+(\b|$))/gim;
-      replacedText = replacedText.replace(replacePattern2, (match, prefix, url) => {
-         let displayUrl = url;
-         if (displayUrl.length > 20) {
-            displayUrl = displayUrl.substring(0, 20) + '...'; // Shorten to 12 characters and add '...'
-         }
-         return prefix + '<a href="http://' + url + '" target="_blank">' + displayUrl + '</a>';
-      });
-
-      //Change email addresses to mailto:: links.
-      replacePattern3 = /(([a-zA-Z0-9-.])+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9]{2,5})/gim;
-      replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
 
       return replacedText;
    }
