@@ -77,7 +77,7 @@ function App() {
       setCategory(noSpaces);
    };
 
-   const sortOptions = ['Due Date', 'Category', 'Completed', 'Uncompleted'];
+   const sortOptions = ['Due Date', 'Category'];
 
    // Function to handle sort option change
    const handleSortOptionChange = (option) => {
