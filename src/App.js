@@ -10,9 +10,7 @@ import { FiSave } from 'react-icons/fi';
 import SettingsCard from './components/SettingsCard';
 import StatsCard from './components/StatsCard';
 import GoalsCard from './components/GoalsCard';
-//import { FaTags } from 'react-icons/fa';
 import { FaListAlt } from 'react-icons/fa';
-import { FaLink } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 
