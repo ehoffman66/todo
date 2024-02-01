@@ -13,6 +13,8 @@ import GoalsCard from './components/GoalsCard';
 //import { FaTags } from 'react-icons/fa';
 import { FaListAlt } from 'react-icons/fa';
 import { FaLink } from 'react-icons/fa';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginPage from './components/LoginPage';
 
 function App() {
    // State variables for todos
@@ -241,6 +243,10 @@ function App() {
    };
 
    return (
+      <Router>
+      <Routes>
+      <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={
       <div className="font-sans bg-brand-gray min-h-screen">
         <div className="container mx-auto px-3 py-8">
           <div className="flex flex-col md:flex-row">
@@ -490,6 +496,9 @@ function App() {
             </div>
          </div>
       </div>
+        } />
+        </Routes>
+      </Router>
    );
 }
 
