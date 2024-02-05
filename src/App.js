@@ -13,6 +13,7 @@ import GoalsCard from './components/GoalsCard';
 import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
+import { Link } from 'react-router-dom';
 
 function App() {
    // State variables for todos
@@ -25,6 +26,13 @@ function App() {
       const savedHideCompleted = localStorage.getItem('hideCompleted');
       return savedHideCompleted ? JSON.parse(savedHideCompleted) : false;
    });
+
+   const [user, setUser] = useState(null);
+
+   const handleLogout = () => {
+     // Clear the user's session...
+     setUser(null);
+   };
 
    const [labels, setLabels] = useState([]);
 
@@ -244,11 +252,26 @@ function App() {
       <Router>
       <Routes>
       <Route path="/login" element={<LoginPage />} />
-        <Route path="*" element={
-      <div className="font-sans bg-brand-gray min-h-screen">
-        <div className="container mx-auto px-3 py-8">
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-3/4 md:mr-4 mb-2 md:mb-0">
+      <Route path="*" element={
+  <div className="font-sans bg-brand-gray min-h-screen">
+    <div className="px-4 py-8 mx-auto md:w-11/12">
+      <div className="flex flex-col md:flex-row justify-center">
+        <div className="w-full md:w-3/12 md:mr-4 mb-4 md:mb-0">
+                     <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>USER</span>} paragraph={
+                        user ? (
+                           <div>
+                           <p>{user.firstName} {user.lastName}</p>
+                           <p>{user.email}</p>
+                           <img src={user.picture} alt="User" />
+                           <button onClick={handleLogout}>Logout</button>
+                           </div>
+                        ) : (
+                           <Link to="/login">Login</Link>
+                        )
+                     }/>
+                  </div>
+
+                  <div className="w-full flex-grow md:mr-4 mb-4 md:mb-0">
                <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
                   <div>
                      <form onSubmit={addTodo} className="flex flex-wrap items-center mb-4">
@@ -463,7 +486,7 @@ function App() {
                   </div>
                }/>
                </div>
-               <div className="">
+               <div className="w-full md:w-3/12 md:mr-4 mb-4 md:mb-0">
                   <div className="side-cards flex flex-col">
                      <div className="stats-card">
                         <StatsCard 
@@ -494,6 +517,7 @@ function App() {
             </div>
          </div>
       </div>
+
         } />
         </Routes>
       </Router>

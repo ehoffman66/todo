@@ -112,9 +112,6 @@ app.get('/api/logout', (req, res) => {
     res.redirect('/');
 });
 
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
-
 const todoSchema = new Schema({
     userId: Schema.Types.ObjectId,
     text: String,
