@@ -16,23 +16,55 @@ import LoginPage from './components/LoginPage';
 import { Link } from 'react-router-dom';
 
 function App() {
-   // State variables for todos
-   const [todos, setTodos] = useState(() => {
-      const savedTodos = localStorage.getItem('todos');
-      return savedTodos ? JSON.parse(savedTodos) : [];
-   });
+   const [user, setUser] = useState(null);
 
+   const fetchTodos = async () => {
+      try {
+         const userResponse = await fetch('http://localhost:3000/api/current_user', {
+            credentials: 'include'
+         });
+         if (!userResponse.ok) {
+            throw new Error('HTTP error ' + userResponse.status);
+         }
+         const user = await userResponse.json();
+         setUser(user);
+
+         if (user) {
+            const tasksResponse = await fetch('http://localhost:3000/api/tasks?userId=' + user.googleId, {
+               credentials: 'include'
+            });
+            if (!tasksResponse.ok) {
+               throw new Error('HTTP error ' + tasksResponse.status);
+            }
+            const tasks = await tasksResponse.json();
+            setTodos(tasks);
+         } else {
+            const savedTodos = localStorage.getItem('todos');
+            setTodos(savedTodos ? JSON.parse(savedTodos) : []);
+         }
+      } catch (error) {
+         console.error('Failed to fetch data:', error);
+      }
+   };
+
+   // Initialize todos to an empty array
+   const [todos, setTodos] = useState([]);
+
+   // Initialize hideCompleted from local storage or default to false
    const [hideCompleted, setHideCompleted] = useState(() => {
       const savedHideCompleted = localStorage.getItem('hideCompleted');
       return savedHideCompleted ? JSON.parse(savedHideCompleted) : false;
    });
 
-   const [user, setUser] = useState(null);
-
    const handleLogout = () => {
-     // Clear the user's session...
-     setUser(null);
+      // Clear the user's session...
+      setUser(null);
    };
+
+   // Fetch todos when the component mounts
+   useEffect(() => {
+      fetchTodos();
+   }, []);
 
    useEffect(() => {
       fetch('http://localhost:3000/api/current_user', { // Server URL
@@ -188,7 +220,7 @@ function App() {
       localStorage.setItem('todos', JSON.stringify(todos));
    }, [todos]);
 
-   const addTodo = (e) => {
+   const addTodo = async (e) => {
       e.preventDefault();
       let localDueDate = '';
       if (dueDate) {
@@ -211,7 +243,34 @@ function App() {
             category,
             labels // Add the labels here
          };
-         setTodos([...todos, newTodo]);
+
+         console.log('User:', user);
+         console.log('New Todo:', newTodo);
+
+         if (user) {
+            try {
+               const response = await fetch('http://localhost:3000/api/tasks', {
+                  method: 'POST',
+                  headers: {
+                     'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ userId: user.id, ...newTodo }),
+                  credentials: 'include'
+               });
+               if (!response.ok) {
+                  throw new Error('HTTP error ' + response.status);
+               }
+               const data = await response.json();
+               setTodos(prevTodos => [...prevTodos, data]);
+            } catch (error) {
+               console.error('Failed to add task:', error);
+            }
+         } else {
+            const localTodos = JSON.parse(localStorage.getItem('todos')) || [];
+            localTodos.push(newTodo);
+            localStorage.setItem('todos', JSON.stringify(localTodos));
+            setTodos(localTodos);
+         }
       }
       setTask("");
       setCategory('');
@@ -224,17 +283,16 @@ function App() {
    };
 
    const toggleCompletion = (id) => {
-      setTodos(todos.map(todo => {
-         if (todo.id === id) {
-            const isCompleted = !todo.completed;
-            return {
-               ...todo,
-               completed: isCompleted,
-               completedAt: isCompleted ? new Date().toISOString() : null,
-            };
-         }
-         return todo;
-      }));
+      console.log('Toggling completion for todo:', id);
+      setTodos(prevTodos => {
+         return prevTodos.map(todo => {
+            if (todo._id === id) {
+               return { ...todo, completed: !todo.completed };
+            } else {
+               return todo;
+            }
+         });
+      });
    };
 
    const isTodoVisible = (todo) => {
@@ -271,9 +329,9 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={
          <div className="font-sans bg-brand-gray min-h-screen">
-<div className="px-4 py-8 mx-auto md:w-10/12">
-    <div className="flex flex-col md:flex-row justify-center">
-        <div className="w-full md:w-2/12 md:mr-4 mb-6 md:mb-2">
+            <div className="px-4 py-8 mx-auto md:w-10/12">
+               <div className="flex flex-col md:flex-row justify-center">
+                  <div className="w-full md:w-2/12 md:mr-4 mb-6 md:mb-2">
                      <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>USER</span>} paragraph={
                         user ? 
                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -432,12 +490,12 @@ function App() {
                                           </form>
                                        ) : (
                                           <Checkbox 
+                                             id={todo._id}
                                              item={<div dangerouslySetInnerHTML={{__html: linkify(todo.text)}} />} 
                                              checked={todo.completed} 
-                                             onChange={() => toggleCompletion(todo.id)}
+                                             onChange={toggleCompletion}
                                              style={{ fontSize: '5.2em' }}
                                           />
-                                          
                                        )}
                                        <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
                                           <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
@@ -482,7 +540,7 @@ function App() {
                                           <Checkbox 
                                              item={todo.text} 
                                              checked={todo.completed} 
-                                             onChange={() => toggleCompletion(todo.id)}
+                                             onChange={() => toggleCompletion(todo._id)}
                                              style={{ fontSize: '5.2em' }}
                                           />
                                           <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>

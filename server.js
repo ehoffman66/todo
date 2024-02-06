@@ -7,11 +7,13 @@ require('dotenv').config();
 const app = express();
 const cors = require('cors');
 
+app.use(express.json());
+
 app.use(cors({
     origin: 'http://localhost:3001', // Client URL
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true // This allows the session cookie to be sent back and forth
+    credentials: true
 }));
 
 app.use(session({
@@ -118,7 +120,7 @@ app.get('/api/logout', (req, res) => {
     res.redirect('/');
 });
 
-const todoSchema = new Schema({
+const taskSchema = new Schema({
     userId: Schema.Types.ObjectId,
     text: String,
     category: String,
@@ -127,16 +129,18 @@ const todoSchema = new Schema({
     labels: [String]
 });
 
-const Todo = mongoose.model('Todo', todoSchema);
+const Task = mongoose.model('Task', taskSchema);
 
-app.post('/api/todos', async (req, res) => {
+app.post('/api/tasks', async (req, res) => {
+    console.log(req.body); // Log the request body
+
     if (!req.user) {
         return res.status(401).send();
     }
 
     const { text, category, dueDate, labels } = req.body;
 
-    const todo = new Todo({
+    const task = new Task({
         userId: req.user.id,
         text,
         category,
@@ -146,9 +150,26 @@ app.post('/api/todos', async (req, res) => {
     });
 
     try {
-        await todo.save();
-        res.send(todo);
+        await task.save();
+        res.send(task);
     } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+app.get('/api/tasks', async (req, res) => {
+    if (!req.user) {
+        return res.status(401).send();
+    }
+
+    try {
+        console.log('User ID Fetch:', req.user.id);
+        const userId = req.user.id;
+        const tasks = await Task.find({ userId: userId });
+        console.log('Tasks:', tasks);
+        res.send(tasks);
+    } catch (err) {
+        console.error('Failed to fetch tasks:', err);
         res.status(500).send(err);
     }
 });
