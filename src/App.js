@@ -34,6 +34,23 @@ function App() {
      setUser(null);
    };
 
+   useEffect(() => {
+      fetch('http://localhost:3000/api/current_user', { // Server URL
+         credentials: 'include' // Include credentials
+      })
+      .then(response => {
+         if (!response.ok) {
+            throw new Error(response.status);
+         }
+         return response.json();
+      })
+      .then(data => {
+         setUser(data);
+         console.log('User data:', data); // Log the user data to the console
+      })
+      .catch((error) => console.error('Error:', error));
+   }, []);
+
    const [labels, setLabels] = useState([]);
 
    const handleSetLabels = (value) => {
@@ -253,240 +270,243 @@ function App() {
       <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={
-  <div className="font-sans bg-brand-gray min-h-screen">
-    <div className="px-4 py-8 mx-auto md:w-11/12">
-      <div className="flex flex-col md:flex-row justify-center">
-        <div className="w-full md:w-3/12 md:mr-4 mb-4 md:mb-0">
+         <div className="font-sans bg-brand-gray min-h-screen">
+<div className="px-4 py-8 mx-auto md:w-10/12">
+    <div className="flex flex-col md:flex-row justify-center">
+        <div className="w-full md:w-2/12 md:mr-4 mb-6 md:mb-2">
                      <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>USER</span>} paragraph={
-                        user ? (
-                           <div>
-                           <p>{user.firstName} {user.lastName}</p>
-                           <p>{user.email}</p>
-                           <img src={user.picture} alt="User" />
-                           <button onClick={handleLogout}>Logout</button>
+                        user ? 
+                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                              <div style={{ display: 'flex', alignItems: 'center' }}>
+                                 <img src={user.picture} alt="User" style={{ borderRadius: '50%', marginRight: '1em' }} />
+                                 <div>
+                                    <p style={{ fontSize: '1.3em' }}>{user.firstName}</p>
+                                    <p style={{ fontSize: '1.3em' }}>{user.lastName}</p>
+                                 </div>
+                              </div>
+                              <button onClick={handleLogout} style={{ marginTop: '1em' }}>Logout</button>
                            </div>
-                        ) : (
+                        : 
                            <Link to="/login">Login</Link>
-                        )
                      }/>
                   </div>
 
-                  <div className="w-full flex-grow md:mr-4 mb-4 md:mb-0">
-               <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
-                  <div>
-                     <form onSubmit={addTodo} className="flex flex-wrap items-center mb-4">
-                        <div className="flex-1 min-w-300px m-2">
-                           <Input 
-                              value={task} 
-                              setValue={setTask} 
-                              size="300px"
-                              placeholder="Add a new task" 
-                           />
-                        </div>
-                        <div className="flex-1 min-w-130px m-2">
-                           <Input 
-                              value={category} 
-                              setValue={handleSetCategory} 
-                              size="130px"
-                              placeholder="Category" 
-                           />
-                        </div>
-                        <div className="flex-1 min-w-150px m-2">
-                           <Input 
-                              type="date"
-                              value={dueDate} 
-                              setValue={setDueDate}
-                              size="150px"
-                              placeholder="Due date" 
-                           />
-                        </div>
-                        <Input 
-                           type="text" 
-                           placeholder="Enter labels" 
-                           value={labels.join(', ')} 
-                           setValue={handleSetLabels}
-                           size="300px"
-                        />
-                        <div className="m-2">
-                           <Button type="submit" color={cardColor}>
-                              <FaPlus />
-                           </Button>
-                        </div>
-                     </form>
-                     <div className="mb-4 flex flex-wrap space-x-2">
-                        <Badge 
-                           key="All" 
-                           badgeText="All"
-                           isSelected={selectedBadge === "All"}
-                           onClick={() => handleBadgeClick("All")}
-                        />
-                        <Badge 
-                           key="Today" 
-                           badgeText={
-                              <div style={{ display: 'flex', alignItems: 'center' }}>
-                                 <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Today
+                  <div className="w-full md:w-8/12 md:mr-4 mb-6 md:mb-2">
+                     <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
+                        <div>
+                           <form onSubmit={addTodo} className="flex flex-wrap items-center mb-4">
+                              <div className="flex-1 min-w-300px m-2">
+                                 <Input 
+                                    value={task} 
+                                    setValue={setTask} 
+                                    size="300px"
+                                    placeholder="Add a new task" 
+                                 />
                               </div>
-                           }
-                           isSelected={selectedBadge === "Today"}
-                           onClick={() => handleBadgeClick("Today")}
-                        />
-                        <Badge 
-                           key="Tomorrow" 
-                           badgeText={
-                              <div style={{ display: 'flex', alignItems: 'center' }}>
-                                 <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Tomorrow
+                              <div className="flex-1 min-w-130px m-2">
+                                 <Input 
+                                    value={category} 
+                                    setValue={handleSetCategory} 
+                                    size="130px"
+                                    placeholder="Category" 
+                                 />
                               </div>
-                           }
-                           isSelected={selectedBadge === "Tomorrow"}
-                           onClick={() => handleBadgeClick("Tomorrow")}
-                        />
-                        <Badge 
-                           key="Overdue" 
-                           badgeText={
-                              <div style={{ display: 'flex', alignItems: 'center' }}>
-                                 <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Overdue
+                              <div className="flex-1 min-w-150px m-2">
+                                 <Input 
+                                    type="date"
+                                    value={dueDate} 
+                                    setValue={setDueDate}
+                                    size="150px"
+                                    placeholder="Due date" 
+                                 />
                               </div>
-                           }
-                           isSelected={selectedBadge === "Overdue"}
-                           onClick={() => handleBadgeClick("Overdue")}
-                        />                
-                        <span style={{ margin: '0 10px' }}></span>
-                        {categories.map((category, index) => (
-                           <Badge 
-                              key={index} 
-                              badgeText={
-                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <FaListAlt style={{ marginRight: '5px' }} /> {category}
-                                 </div>
-                              }
-                              isSelected={selectedBadge === category}
-                              onClick={() => handleBadgeClick(category)}
-                           />
-                        ))}
-                  </div>
-                  <div>
-                     <div style={{ marginTop: '20px' }}>
-                        <div className="flex justify-between items-center mb-4">
-                           <h2 className="text-2xl">Todo Items</h2>
-                           <Select items={sortOptions} onItemSelected={handleSortOptionChange} color={cardColor} />               
-                        </div>                 
-                           {sortedTodos.filter(todo => !todo.completed && isTodoVisible(todo)).map((todo) => (
-                           <div 
-                              key={todo.id}
-                              className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
-                           >
-                              <div>
-                                 {editingTodo === todo ? (
-                                    <form onSubmit={(e) => {
-                                       e.preventDefault();
-                                       handleUpdateTodo(todo.id, editText, editCategory, editDueDate);
-                                    }}>
-                                       <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                          <Input 
-                                             value={editText} 
-                                             setValue={setEditText}
-                                             size="320px"
-                                             autoFocus
-                                             style={{ marginBottom: '10px' }}
-                                          />
-                                          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
-                                             <Input 
-                                                type="date"
-                                                size="150px"
-                                                value={editDueDate} 
-                                                setValue={setEditDueDate}
-                                                style={{ marginBottom: '10px', marginRight: '10px' }}
-                                             />
-                                             <Input 
-                                                value={editCategory} 
-                                                size="150px"
-                                                setValue={setEditCategory}
-                                                style={{ marginBottom: '10px' }}
-                                             />
-                                          </div>
+                              <Input 
+                                 type="text" 
+                                 placeholder="Enter labels" 
+                                 value={labels.join(', ')} 
+                                 setValue={handleSetLabels}
+                                 size="300px"
+                              />
+                              <div className="m-2">
+                                 <Button type="submit" color={cardColor}>
+                                    <FaPlus />
+                                 </Button>
+                              </div>
+                           </form>
+                           <div className="mb-4 flex flex-wrap space-x-2">
+                              <Badge 
+                                 key="All" 
+                                 badgeText="All"
+                                 isSelected={selectedBadge === "All"}
+                                 onClick={() => handleBadgeClick("All")}
+                              />
+                              <Badge 
+                                 key="Today" 
+                                 badgeText={
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                       <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Today
+                                    </div>
+                                 }
+                                 isSelected={selectedBadge === "Today"}
+                                 onClick={() => handleBadgeClick("Today")}
+                              />
+                              <Badge 
+                                 key="Tomorrow" 
+                                 badgeText={
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                       <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Tomorrow
+                                    </div>
+                                 }
+                                 isSelected={selectedBadge === "Tomorrow"}
+                                 onClick={() => handleBadgeClick("Tomorrow")}
+                              />
+                              <Badge 
+                                 key="Overdue" 
+                                 badgeText={
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                       <FaRegCalendarAlt style={{ marginRight: '5px' }} /> Overdue
+                                    </div>
+                                 }
+                                 isSelected={selectedBadge === "Overdue"}
+                                 onClick={() => handleBadgeClick("Overdue")}
+                              />                
+                              <span style={{ margin: '0 10px' }}></span>
+                              {categories.map((category, index) => (
+                                 <Badge 
+                                    key={index} 
+                                    badgeText={
+                                       <div style={{ display: 'flex', alignItems: 'center' }}>
+                                          <FaListAlt style={{ marginRight: '5px' }} /> {category}
                                        </div>
-                                       <Button color={cardColor} type="submit" style={{ marginTop: '10px', marginBottom: '10px' }}>
-                                          <FiSave />
-                                          Save
-                                       </Button>
-                                    </form>
-                                 ) : (
-                                    <Checkbox 
-                                       item={<div dangerouslySetInnerHTML={{__html: linkify(todo.text)}} />} 
-                                       checked={todo.completed} 
-                                       onChange={() => toggleCompletion(todo.id)}
-                                       style={{ fontSize: '5.2em' }}
-                                    />
-                                    
-                                 )}
-                                 <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
-                                    <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
-                                    <span style={{ color: new Date(todo.dueDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0) ? 'red' : 'inherit' }}>
-                                       {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
-                                    </span>
-                                    <span style={{ margin: '0 5px' }}>|</span>
-                                    <span style={{ display: 'flex', alignItems: 'center' }}>
-                                       <FaListAlt style={{ marginRight: '5px' }} />
-                                       {todo.category}
-                                    </span>
-                                 </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', width: '80px' }}>
-                                 <Button onClick={() => handleEditClick(todo)} style={{ marginRight: '10px' }} color={cardColor}>
-                                    <FaPencilAlt />
-                                 </Button>
-                                 <Button onClick={() => deleteTodo(todo.id)} color={cardColor}>
-                                    <FaTrash />
-                                 </Button>
-                              </div>
-                           </div>
-                        ))}
-                     </div>
-                     </div>
-
-                     <div>
-                     {!hideCompleted && (
-                     <div style={{ marginTop: '50px' }}>
-                        {!(selectedBadge === 'Today' || selectedBadge === 'Overdue' || selectedBadge === 'Tomorrow') && (
-                           <h2 className="text-2xl font-bold mb-4">Completed Tasks</h2>
-                        )}
-                        {completedTodos.filter(isTodoVisible).map((todo) => 
-                           (todo.completed && (selectedBadge === 'Today' || selectedBadge === 'Overdue' || selectedBadge === 'Tomorrow')) 
-                              ? null 
-                              : (
+                                    }
+                                    isSelected={selectedBadge === category}
+                                    onClick={() => handleBadgeClick(category)}
+                                 />
+                              ))}
+                        </div>
+                        <div>
+                           <div style={{ marginTop: '20px' }}>
+                              <div className="flex justify-between items-center mb-4">
+                                 <h2 className="text-2xl">Todo Items</h2>
+                                 <Select items={sortOptions} onItemSelected={handleSortOptionChange} color={cardColor} />               
+                              </div>                 
+                                 {sortedTodos.filter(todo => !todo.completed && isTodoVisible(todo)).map((todo) => (
                                  <div 
                                     key={todo.id}
                                     className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
                                  >
-                                 <div className="md:w-1/2">
-                                    <Checkbox 
-                                       item={todo.text} 
-                                       checked={todo.completed} 
-                                       onChange={() => toggleCompletion(todo.id)}
-                                       style={{ fontSize: '5.2em' }}
-                                    />
-                                    <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
-                                       <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
-                                       <span>
-                                          {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
-                                       </span>
-                                       <span style={{ margin: '0 5px' }}>|</span>
-                                       <span>{todo.category}</span>
+                                    <div>
+                                       {editingTodo === todo ? (
+                                          <form onSubmit={(e) => {
+                                             e.preventDefault();
+                                             handleUpdateTodo(todo.id, editText, editCategory, editDueDate);
+                                          }}>
+                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                <Input 
+                                                   value={editText} 
+                                                   setValue={setEditText}
+                                                   size="320px"
+                                                   autoFocus
+                                                   style={{ marginBottom: '10px' }}
+                                                />
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                                                   <Input 
+                                                      type="date"
+                                                      size="150px"
+                                                      value={editDueDate} 
+                                                      setValue={setEditDueDate}
+                                                      style={{ marginBottom: '10px', marginRight: '10px' }}
+                                                   />
+                                                   <Input 
+                                                      value={editCategory} 
+                                                      size="150px"
+                                                      setValue={setEditCategory}
+                                                      style={{ marginBottom: '10px' }}
+                                                   />
+                                                </div>
+                                             </div>
+                                             <Button color={cardColor} type="submit" style={{ marginTop: '10px', marginBottom: '10px' }}>
+                                                <FiSave />
+                                                Save
+                                             </Button>
+                                          </form>
+                                       ) : (
+                                          <Checkbox 
+                                             item={<div dangerouslySetInnerHTML={{__html: linkify(todo.text)}} />} 
+                                             checked={todo.completed} 
+                                             onChange={() => toggleCompletion(todo.id)}
+                                             style={{ fontSize: '5.2em' }}
+                                          />
+                                          
+                                       )}
+                                       <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
+                                          <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
+                                          <span style={{ color: new Date(todo.dueDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0) ? 'red' : 'inherit' }}>
+                                             {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
+                                          </span>
+                                          <span style={{ margin: '0 5px' }}>|</span>
+                                          <span style={{ display: 'flex', alignItems: 'center' }}>
+                                             <FaListAlt style={{ marginRight: '5px' }} />
+                                             {todo.category}
+                                          </span>
+                                       </div>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '80px' }}>
+                                       <Button onClick={() => handleEditClick(todo)} style={{ marginRight: '10px' }} color={cardColor}>
+                                          <FaPencilAlt />
+                                       </Button>
+                                       <Button onClick={() => deleteTodo(todo.id)} color={cardColor}>
+                                          <FaTrash />
+                                       </Button>
                                     </div>
                                  </div>
-                                 <Button onClick={() => deleteTodo(todo.id)} color={cardColor}>
-                                    <FaTrash />
-                                 </Button>
+                              ))}
+                           </div>
+                           </div>
+
+                           <div>
+                           {!hideCompleted && (
+                           <div style={{ marginTop: '50px' }}>
+                              {!(selectedBadge === 'Today' || selectedBadge === 'Overdue' || selectedBadge === 'Tomorrow') && (
+                                 <h2 className="text-2xl font-bold mb-4">Completed Tasks</h2>
+                              )}
+                              {completedTodos.filter(isTodoVisible).map((todo) => 
+                                 (todo.completed && (selectedBadge === 'Today' || selectedBadge === 'Overdue' || selectedBadge === 'Tomorrow')) 
+                                    ? null 
+                                    : (
+                                       <div 
+                                          key={todo.id}
+                                          className={`flex items-start justify-between ${todo.completed ? 'line-through' : ''}`}
+                                       >
+                                       <div className="md:w-1/2">
+                                          <Checkbox 
+                                             item={todo.text} 
+                                             checked={todo.completed} 
+                                             onChange={() => toggleCompletion(todo.id)}
+                                             style={{ fontSize: '5.2em' }}
+                                          />
+                                          <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
+                                             <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
+                                             <span>
+                                                {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
+                                             </span>
+                                             <span style={{ margin: '0 5px' }}>|</span>
+                                             <span>{todo.category}</span>
+                                          </div>
+                                       </div>
+                                       <Button onClick={() => deleteTodo(todo.id)} color={cardColor}>
+                                          <FaTrash />
+                                       </Button>
+                              </div>
+                                    )
+                              )}
+                           </div>
+                           )}
+                           </div>
                         </div>
-                              )
-                        )}
-                     </div>
-                     )}
-                     </div>
-                  </div>
-               }/>
+                     }/>
                </div>
-               <div className="w-full md:w-3/12 md:mr-4 mb-4 md:mb-0">
+               <div className="w-full md:w-2/12 md:mr-4 mb-6 md:mb-2">
                   <div className="side-cards flex flex-col">
                      <div className="stats-card">
                         <StatsCard 
