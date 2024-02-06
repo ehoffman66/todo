@@ -4,14 +4,14 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 const mongoose = require('mongoose');
 require('dotenv').config();
-
 const app = express();
-
 const cors = require('cors');
 
 app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
+    origin: 'http://localhost:3001', // Client URL
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true // This allows the session cookie to be sent back and forth
 }));
 
 app.use(session({
@@ -39,7 +39,9 @@ const userSchema = new Schema({
     firstName: String,
     lastName: String,
     email: String,
-    picture: String // Add this line
+    picture: String,
+    createdAt: { type: Date, default: Date.now },
+    lastLoginAt: Date,
 });
 
 const User = mongoose.model('User', userSchema);
@@ -62,7 +64,8 @@ passport.use(new GoogleStrategy({
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
                 email: profile.emails[0].value,
-                picture: profile.photos[0].value // Add this line
+                picture: profile.photos[0].value, // Add this line
+                createdAt: Date.now() // Add this line
             });
             const savedUser = await user.save();
             console.log('User saved:', savedUser);
@@ -88,8 +91,11 @@ app.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email']
 }));
 
-app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-    // Successful authentication, redirect to your client application.
+app.get('/auth/google/callback', passport.authenticate('google'), async (req, res) => {
+    // Successful authentication, update lastLoginAt and save the user document.
+    req.user.lastLoginAt = Date.now();
+    await req.user.save();
+
     res.redirect('http://localhost:3001'); // Replace with your client URL
 });
 
