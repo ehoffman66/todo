@@ -283,7 +283,6 @@ function App() {
    };
 
    const toggleCompletion = (id) => {
-      console.log('Toggling completion for todo:', id);
       setTodos(prevTodos => {
          return prevTodos.map(todo => {
             if (todo._id === id) {
@@ -345,7 +344,7 @@ function App() {
                               <button onClick={handleLogout} style={{ marginTop: '1em' }}>Logout</button>
                            </div>
                         : 
-                           <Link to="/login">Login</Link>
+                           <Link to="http://localhost:3000/auth/google">Login</Link>
                      }/>
                   </div>
 
