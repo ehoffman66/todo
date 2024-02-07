@@ -173,3 +173,27 @@ app.get('/api/tasks', async (req, res) => {
         res.status(500).send(err);
     }
 });
+
+app.put('/api/tasks/:id', async (req, res) => {
+    if (!req.user) {
+        return res.status(401).send();
+    }
+
+    const { completed } = req.body;
+
+    try {
+        const task = await Task.findOne({ _id: req.params.id, userId: req.user.id });
+
+        if (!task) {
+            return res.status(404).send();
+        }
+
+        task.completed = completed;
+        await task.save();
+
+        res.send(task);
+    } catch (err) {
+        console.error('Failed to update task:', err);
+        res.status(500).send(err);
+    }
+});
