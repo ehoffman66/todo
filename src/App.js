@@ -175,21 +175,39 @@ function App() {
       return replacedText;
    }
 
-   const handleUpdateTodo = (id, newText, newCategory, newDueDate) => {
-      setTodos(todos.map(todo => 
-         todo.id === id 
-            ? { 
-                  ...todo, 
-                  text: newText, 
-                  category: newCategory, 
-                  dueDate: newDueDate ? new Date(newDueDate + 'T00:00') : null 
-               } 
-            : todo
-      ));
-      setEditingTodo(null);
-      setEditText('');
-      setEditCategory('');
-      setEditDueDate('');
+   const handleUpdateTodo = async (id, newText, newCategory, newDueDate) => {
+      const todoToUpdate = todos.find(todo => todo._id === id);
+      if (!todoToUpdate) return;
+
+      const updatedTodo = { 
+         ...todoToUpdate, 
+         text: newText, 
+         category: newCategory, 
+         dueDate: newDueDate ? new Date(newDueDate + 'T00:00') : null 
+      };
+
+      const response = await fetch(`http://localhost:3000/api/tasks/${id}`, {
+         method: 'PUT',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(updatedTodo),
+         credentials: 'include', // Include credentials in the request
+      });
+
+      if (response.ok) {
+         setTodos(todos.map(todo => 
+            todo._id === id 
+               ? updatedTodo
+               : todo
+         ));
+         setEditingTodo(null);
+         setEditText('');
+         setEditCategory('');
+         setEditDueDate('');
+      } else {
+         console.error('Failed to update todo');
+      }
    };
 
    const uniqueCategories = todos.map(todo => todo.category)
@@ -286,13 +304,17 @@ function App() {
       if (!todoToUpdate) return;
 
       const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
+      console.log('Updated Todo:', updatedTodo);
+      console.log('User:', user);
+      console.log('ID:', id);
 
-      const response = await fetch(`/api/tasks/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/tasks/${id}`, {
          method: 'PUT',
          headers: {
             'Content-Type': 'application/json',
          },
          body: JSON.stringify(updatedTodo),
+         credentials: 'include', // Include credentials in the request
       });
 
       if (response.ok) {
@@ -497,7 +519,12 @@ function App() {
                                                    />
                                                 </div>
                                              </div>
-                                             <Button color={cardColor} type="submit" style={{ marginTop: '10px', marginBottom: '10px' }}>
+                                             <Button 
+                                                color={cardColor} 
+                                                type="submit" 
+                                                style={{ marginTop: '10px', marginBottom: '10px' }} 
+                                                onClick={() => handleUpdateTodo(todo.id, editText, editCategory, editDueDate)}
+                                             >
                                                 <FiSave />
                                                 Save
                                              </Button>
