@@ -66,7 +66,7 @@ function App() {
    }, []);
 
    useEffect(() => {
-      fetch('http://localhost:3000/api/current_user', { // Server URL
+      fetch('http://localhost:3000/api/current_user', {
          credentials: 'include' // Include credentials
       })
       .then(response => {
@@ -159,17 +159,19 @@ function App() {
    };
 
    function linkify(inputText) {
-      let replacedText, replacePattern1;
+      let replacedText, replacePattern1, replacePattern2;
 
-      //URLs starting with http://, https://, or ftp://
+      // URLs starting with http://, https://, or ftp://
       replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gim;
       replacedText = inputText.replace(replacePattern1, (match, url) => {
-         let displayUrl = url.replace(/(^\w+:|^)\/\//, ''); // Remove http://, https://, or ftp://
-         displayUrl = displayUrl.replace(/^www\./, ''); // Remove www.
-         if (displayUrl.length > 20) {
-            displayUrl = displayUrl.substring(0, 20) + '...'; // Shorten to 20 characters and add '...'
-         }
-         return '<a href="' + url + '" target="_blank" style="text-decoration: underline;">' + displayUrl + '</a>';
+         return '<a href="' + url + '" target="_blank" style="text-decoration: underline;">' + url + '</a>';
+      });
+
+      // URLs starting with "www." (without // before it).
+      replacePattern2 = /(^|[^/])(www.[\S]+(\b|$))/gim;
+      replacedText = replacedText.replace(replacePattern2, (match, p1, p2) => {
+         const displayText = p2.replace(/^www\./, ''); // Remove "www." from the start of the URL
+         return p1 + '<a href="http://' + p2 + '" target="_blank" style="text-decoration: underline;">' + displayText + '</a>';
       });
 
       return replacedText;
