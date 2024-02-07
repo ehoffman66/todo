@@ -12,7 +12,6 @@ import StatsCard from './components/StatsCard';
 import GoalsCard from './components/GoalsCard';
 import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from './components/LoginPage';
 import { Link } from 'react-router-dom';
 
 function App() {
@@ -282,16 +281,33 @@ function App() {
       setTodos(todos.filter(todo => todo.id !== id));
    };
 
-   const toggleCompletion = (id) => {
-      setTodos(prevTodos => {
-         return prevTodos.map(todo => {
-            if (todo._id === id) {
-               return { ...todo, completed: !todo.completed };
-            } else {
-               return todo;
-            }
-         });
+   const toggleCompletion = async (id) => {
+      const todoToUpdate = todos.find(todo => todo._id === id);
+      if (!todoToUpdate) return;
+
+      const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
+
+      const response = await fetch(`/api/tasks/${id}`, {
+         method: 'PUT',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(updatedTodo),
       });
+
+      if (response.ok) {
+         setTodos(prevTodos => {
+            return prevTodos.map(todo => {
+               if (todo._id === id) {
+                  return updatedTodo;
+               } else {
+                  return todo;
+               }
+            });
+         });
+      } else {
+         console.error('Failed to update todo');
+      }
    };
 
    const isTodoVisible = (todo) => {
@@ -325,7 +341,6 @@ function App() {
    return (
       <Router>
       <Routes>
-      <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={
          <div className="font-sans bg-brand-gray min-h-screen">
             <div className="px-4 py-8 mx-auto md:w-10/12">
