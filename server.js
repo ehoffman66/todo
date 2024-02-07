@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(cors({
     origin: 'http://localhost:3001', // Client URL
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
