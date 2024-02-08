@@ -98,7 +98,7 @@ app.get('/auth/google/callback', passport.authenticate('google'), async (req, re
     req.user.lastLoginAt = Date.now();
     await req.user.save();
 
-    res.redirect('http://localhost:3001'); // Replace with your client URL
+    res.redirect('http://localhost:3001');
 });
 
 app.listen(3000, () => {
@@ -114,10 +114,16 @@ app.get('/api/current_user', (req, res) => {
     }
 });
 
-// Route to handle user logout
-app.get('/api/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+app.post('/api/logout', (req, res) => {
+    req.logout(err => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Failed to log out');
+        }
+
+        res.clearCookie('sessionID');
+        res.send('Logged out');
+    });
 });
 
 const taskSchema = new Schema({
@@ -132,7 +138,7 @@ const taskSchema = new Schema({
 const Task = mongoose.model('Task', taskSchema);
 
 app.post('/api/tasks', async (req, res) => {
-    console.log(req.body); // Log the request body
+    console.log(req.body);
 
     if (!req.user) {
         return res.status(401).send();

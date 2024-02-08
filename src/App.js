@@ -55,9 +55,25 @@ function App() {
       return savedHideCompleted ? JSON.parse(savedHideCompleted) : false;
    });
 
-   const handleLogout = () => {
-      // Clear the user's session...
-      setUser(null);
+   const handleLogout = async () => {
+      console.log('Logging out user:', user);
+      
+      // Make a request to the logout endpoint
+      const response = await fetch('http://localhost:3000/api/logout', {
+         method: 'POST',
+         credentials: 'include', // Include credentials in the request
+      });
+
+      if (response.ok) {
+         // Clear user data from the state
+         setUser(null);
+         setTodos([]);
+
+         // Optionally, redirect the user to the login page
+         // history.push('/login');
+      } else {
+         console.error('Failed to log out');
+      }
    };
 
    // Fetch todos when the component mounts
@@ -214,7 +230,6 @@ function App() {
 
    const uniqueCategories = todos.map(todo => todo.category)
                               .filter((category, index, self) => self.indexOf(category) === index);
-
 
    const sortedTodos = [...todos].sort((a, b) => {
      if (a.completed !== b.completed) {
@@ -523,9 +538,8 @@ function App() {
                                              </div>
                                              <Button 
                                                 color={cardColor} 
-                                                type="submit" 
                                                 style={{ marginTop: '10px', marginBottom: '10px' }} 
-                                                onClick={() => handleUpdateTodo(todo.id, editText, editCategory, editDueDate)}
+                                                onClick={() => handleUpdateTodo(editingTodo._id, editText, editCategory, editDueDate)}
                                              >
                                                 <FiSave />
                                                 Save
