@@ -57,7 +57,7 @@ function App() {
 
    const handleLogout = async () => {
       console.log('Logging out user:', user);
-      
+
       // Make a request to the logout endpoint
       const response = await fetch('http://localhost:3000/api/logout', {
          method: 'POST',
@@ -194,14 +194,15 @@ function App() {
    }
 
    const handleUpdateTodo = async (id, newText, newCategory, newDueDate) => {
-      const todoToUpdate = todos.find(todo => todo._id === id);
-      if (!todoToUpdate) return;
+      if (!id) {
+         console.error('Todo ID is undefined');
+         return;
+      }
 
       const updatedTodo = { 
-         ...todoToUpdate, 
          text: newText, 
          category: newCategory, 
-         dueDate: newDueDate ? new Date(newDueDate + 'T00:00') : null 
+         dueDate: newDueDate ? new Date(newDueDate + 'T00:00') : undefined 
       };
 
       const response = await fetch(`http://localhost:3000/api/tasks/${id}`, {
@@ -210,19 +211,13 @@ function App() {
             'Content-Type': 'application/json',
          },
          body: JSON.stringify(updatedTodo),
-         credentials: 'include', // Include credentials in the request
+         credentials: 'include'
       });
 
       if (response.ok) {
-         setTodos(todos.map(todo => 
-            todo._id === id 
-               ? updatedTodo
-               : todo
-         ));
-         setEditingTodo(null);
-         setEditText('');
-         setEditCategory('');
-         setEditDueDate('');
+         const updatedTodo = await response.json();
+         // Update the todo in the state
+         setTodos(todos.map(todo => todo._id === id ? updatedTodo : todo));
       } else {
          console.error('Failed to update todo');
       }

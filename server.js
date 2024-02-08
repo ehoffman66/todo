@@ -185,7 +185,7 @@ app.put('/api/tasks/:id', async (req, res) => {
         return res.status(401).send();
     }
 
-    const { completed } = req.body;
+    const { completed, text, category, dueDate } = req.body;
 
     try {
         const task = await Task.findOne({ _id: req.params.id, userId: req.user.id });
@@ -194,7 +194,19 @@ app.put('/api/tasks/:id', async (req, res) => {
             return res.status(404).send();
         }
 
-        task.completed = completed;
+        if (completed !== undefined) {
+            task.completed = completed;
+        }
+        if (text !== undefined) {
+            task.text = text;
+        }
+        if (category !== undefined) {
+            task.category = category;
+        }
+        if (dueDate !== undefined) {
+            task.dueDate = new Date(dueDate);
+        }
+
         await task.save();
 
         res.send(task);
