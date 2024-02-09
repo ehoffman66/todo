@@ -7,30 +7,30 @@ const SettingsCard = ({ cardColor, hideCompleted, setHideCompleted, colorOptions
   return (
     <Card 
       backgroundColor={cardColor}
-      heading={<span style={{ fontSize: '2em' }}>SETTINGS</span>} 
+      heading={<span className="text-2xl">SETTINGS</span>} 
       paragraph={
         <>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="flex items-center">
             <Checkbox 
               item={hideCompleted} 
               checked={hideCompleted} 
               onChange={() => setHideCompleted(!hideCompleted)} 
-              style={{ fontSize: '5.2em' }}
+              className="text-5xl"
             />
-            <span style={{ marginLeft: '10px' }}>Hide Completed</span>
+            <span className="ml-2">Hide Completed</span>
           </div>
           <div>
             <label>Card Color</label>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '10px' }}>
-                {colorOptions.map(color => (
-                    <Badge 
-                        key={color} 
-                        badgeColor={color}
-                        badgeText=''
-                        isSelected={cardColor === color}
-                        onClick={setCardColor}
-                    />
-                ))}
+            <div className="flex flex-wrap justify-start items-center space-x-2 space-y-2">
+              {colorOptions.map(color => (
+                <Badge 
+                  key={color} 
+                  badgeColor={color}
+                  badgeText=''
+                  isSelected={cardColor === color}
+                  onClick={setCardColor}
+                />
+              ))}
             </div>
           </div>
         </>
