@@ -13,6 +13,7 @@ import GoalsCard from './components/GoalsCard';
 import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Avatar from './components/Avatar';
 
 function App() {
    const [user, setUser] = useState(null);
@@ -390,21 +391,26 @@ function App() {
             <div className="px-4 py-8 mx-auto md:w-10/12">
                <div className="flex flex-col md:flex-row justify-center">
                   <div className="w-full md:w-2/12 md:mr-4 mb-6 md:mb-2">
-                     <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>USER</span>} paragraph={
-                        user ? 
-                           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                              <div style={{ display: 'flex', alignItems: 'center' }}>
-                                 <img src={user.picture} alt="User" style={{ borderRadius: '50%', marginRight: '1em' }} />
-                                 <div>
-                                    <p style={{ fontSize: '1.3em' }}>{user.firstName}</p>
-                                    <p style={{ fontSize: '1.3em' }}>{user.lastName}</p>
+                     <Card 
+                        className="p-4"
+                        backgroundColor={cardColor} 
+                        heading={<span className="text-2xl">USER</span>} 
+                        paragraph={
+                           user ? 
+                              <div className="flex flex-col items-center">
+                                 <div className="flex items-center space-x-4">
+                                    <Avatar imageUrl={user.picture} />
+                                    <div>
+                                       <p className="text-lg">{user.firstName}</p>
+                                       <p className="text-lg">{user.lastName}</p>
+                                    </div>
                                  </div>
+                                 <button onClick={handleLogout} className="mt-4">Logout</button>
                               </div>
-                              <button onClick={handleLogout} style={{ marginTop: '1em' }}>Logout</button>
-                           </div>
-                        : 
-                           <Link to="http://localhost:3000/auth/google">Login</Link>
-                     }/>
+                           : 
+                              <Link to="http://localhost:3000/auth/google">Login</Link>
+                        }
+                     />
                   </div>
 
                   <div className="w-full md:w-8/12 md:mr-4 mb-6 md:mb-2">
