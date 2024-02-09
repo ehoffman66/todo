@@ -181,7 +181,8 @@ function App() {
       // URLs starting with http://, https://, or ftp://
       replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gim;
       replacedText = inputText.replace(replacePattern1, (match, url) => {
-         return '<a href="' + url + '" target="_blank" style="text-decoration: underline;">' + url + '</a>';
+         const displayText = url.replace(/^https?:\/\//, ''); // Remove "http://" or "https://" from the start of the URL
+         return '<a href="' + url + '" target="_blank" style="text-decoration: underline;">' + displayText + '</a>';
       });
 
       // URLs starting with "www." (without // before it).
