@@ -180,6 +180,21 @@ app.get('/api/tasks', async (req, res) => {
     }
 });
 
+app.delete('/api/tasks/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await Task.findByIdAndDelete(id);
+        if (!result) {
+            return res.status(404).send('Task not found');
+        }
+        res.send('Task deleted');
+    } catch (err) {
+        console.error('Failed to delete task:', err);
+        res.status(500).send(err.toString());
+    }
+});
+
 app.put('/api/tasks/:id', async (req, res) => {
     if (!req.user) {
         return res.status(401).send();

@@ -307,8 +307,18 @@ function App() {
       setLabels([]);
    };
 
-   const deleteTodo = (id) => {
-      setTodos(todos.filter(todo => todo.id !== id));
+   const deleteTodo = async (id) => {
+      const response = await fetch(`http://localhost:3000/api/tasks/${id}`, {
+         method: 'DELETE',
+         credentials: 'include',
+      });
+
+      if (response.ok) {
+         // Remove the todo from the state
+         setTodos(todos.filter(todo => todo._id !== id));
+      } else {
+         console.error('Failed to delete todo');
+      }
    };
 
    const toggleCompletion = async (id) => {
@@ -565,7 +575,7 @@ function App() {
                                        <Button onClick={() => handleEditClick(todo)} style={{ marginRight: '10px' }} color={cardColor}>
                                           <FaPencilAlt />
                                        </Button>
-                                       <Button onClick={() => deleteTodo(todo.id)} color={cardColor}>
+                                       <Button onClick={() => deleteTodo(todo._id)} color={cardColor}>
                                           <FaTrash />
                                        </Button>
                                     </div>
@@ -604,7 +614,7 @@ function App() {
                                              <span>{todo.category}</span>
                                           </div>
                                        </div>
-                                       <Button onClick={() => deleteTodo(todo.id)} color={cardColor}>
+                                       <Button onClick={() => deleteTodo(todo._id)} color={cardColor}>
                                           <FaTrash />
                                        </Button>
                               </div>
