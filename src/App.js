@@ -12,8 +12,8 @@ import StatsCard from './components/StatsCard';
 import GoalsCard from './components/GoalsCard';
 import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Avatar from './components/Avatar';
+import { FaGoogle } from 'react-icons/fa';
 
 function App() {
    const [user, setUser] = useState(null);
@@ -393,7 +393,6 @@ function App() {
                <div className="flex flex-col md:flex-row justify-center">
                   <div className="w-full md:w-2/12 md:mr-4 mb-6 md:mb-2">
                      <Card 
-                        className="p-4"
                         backgroundColor={cardColor} 
                         heading={<span className="text-2xl">USER</span>} 
                         paragraph={
@@ -406,10 +405,16 @@ function App() {
                                        <p className="text-lg">{user.lastName}</p>
                                     </div>
                                  </div>
-                                 <button onClick={handleLogout} className="mt-4">Logout</button>
+                                 <Button onClick={handleLogout} className="mt-4" color={cardColor}>
+                                    Logout
+                                 </Button>
                               </div>
                            : 
-                              <Link to="http://localhost:3000/auth/google">Login</Link>
+                              <div className="flex justify-center">
+                                 <Button onClick={() => window.location.href="http://localhost:3000/auth/google"} color={cardColor}>
+                                    <FaGoogle className="mr-2" /> Login
+                                 </Button>
+                              </div>
                         }
                      />
                   </div>
