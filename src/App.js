@@ -416,8 +416,8 @@ function App() {
                   <div className="w-full md:w-8/12 md:mr-4 mb-6 md:mb-2">
                      <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
                         <div>
-                           <form onSubmit={addTodo} className="flex flex-wrap items-center mb-4">
-                              <div className="flex-1 min-w-300px m-2">
+                           <form onSubmit={addTodo} className="flex flex-wrap justify-start items-center mb-4">
+                              <div className="min-w-300px m-2">
                                  <Input 
                                     value={task} 
                                     setValue={setTask} 
@@ -425,7 +425,7 @@ function App() {
                                     placeholder="Add a new task" 
                                  />
                               </div>
-                              <div className="flex-1 min-w-130px m-2">
+                              <div className="min-w-130px m-2">
                                  <Input 
                                     value={category} 
                                     setValue={handleSetCategory} 
@@ -433,7 +433,7 @@ function App() {
                                     placeholder="Category" 
                                  />
                               </div>
-                              <div className="flex-1 min-w-150px m-2">
+                              <div className="min-w-150px m-2">
                                  <Input 
                                     type="date"
                                     value={dueDate} 
@@ -442,13 +442,15 @@ function App() {
                                     placeholder="Due date" 
                                  />
                               </div>
-                              <Input 
-                                 type="text" 
-                                 placeholder="Enter labels" 
-                                 value={labels.join(', ')} 
-                                 setValue={handleSetLabels}
-                                 size="300px"
-                              />
+                              <div className="m-2">
+                                 <Input 
+                                    type="text" 
+                                    placeholder="Enter labels" 
+                                    value={labels.join(', ')} 
+                                    setValue={handleSetLabels}
+                                    size="300px"
+                                 />
+                              </div>
                               <div className="m-2">
                                  <Button type="submit" color={cardColor}>
                                     <FaPlus />
