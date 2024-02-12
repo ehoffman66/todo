@@ -20,7 +20,7 @@ function App() {
 
    const fetchTodos = async () => {
       try {
-         const userResponse = await fetch('http://localhost:3000/api/current_user', {
+         const userResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/current_user`, {
             credentials: 'include'
          });
          if (!userResponse.ok) {
@@ -30,7 +30,7 @@ function App() {
          setUser(user);
 
          if (user) {
-            const tasksResponse = await fetch('http://localhost:3000/api/tasks?userId=' + user.googleId, {
+            const tasksResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks?userId=${user.googleId}`, {
                credentials: 'include'
             });
             if (!tasksResponse.ok) {
@@ -60,9 +60,9 @@ function App() {
       console.log('Logging out user:', user);
 
       // Make a request to the logout endpoint
-      const response = await fetch('http://localhost:3000/api/logout', {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/logout`, {
          method: 'POST',
-         credentials: 'include', // Include credentials in the request
+         credentials: 'include',
       });
 
       if (response.ok) {
@@ -83,7 +83,7 @@ function App() {
    }, []);
 
    useEffect(() => {
-      fetch('http://localhost:3000/api/current_user', {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/current_user`, {
          credentials: 'include' // Include credentials
       })
       .then(response => {
@@ -209,7 +209,7 @@ function App() {
          dueDate: newDueDate ? new Date(newDueDate + 'T00:00') : undefined 
       };
 
-      const response = await fetch(`http://localhost:3000/api/tasks/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks/${id}`, {
          method: 'PUT',
          headers: {
             'Content-Type': 'application/json',
@@ -282,7 +282,7 @@ function App() {
 
          if (user) {
             try {
-               const response = await fetch('http://localhost:3000/api/tasks', {
+               const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks`, {
                   method: 'POST',
                   headers: {
                      'Content-Type': 'application/json'
@@ -312,7 +312,7 @@ function App() {
    };
 
    const deleteTodo = async (id) => {
-      const response = await fetch(`http://localhost:3000/api/tasks/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks/${id}`, {
          method: 'DELETE',
          credentials: 'include',
       });
@@ -334,7 +334,7 @@ function App() {
       console.log('User:', user);
       console.log('ID:', id);
 
-      const response = await fetch(`http://localhost:3000/api/tasks/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks/${id}`, {
          method: 'PUT',
          headers: {
             'Content-Type': 'application/json',
@@ -413,7 +413,7 @@ function App() {
                               </div>
                            : 
                               <div className="flex justify-center">
-                                 <Button onClick={() => window.location.href="http://localhost:3000/auth/google"} color={cardColor}>
+                                 <Button onClick={() => window.location.href=`${process.env.REACT_APP_BASE_URL}/auth/google`} color={cardColor}>
                                     <FaGoogle className="mr-2" /> Login
                                  </Button>
                               </div>
