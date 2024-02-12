@@ -10,7 +10,7 @@ const cors = require('cors');
 app.use(express.json());
 
 app.use(cors({
-    origin: 'http://localhost:3001', // Client URL
+    origin: process.env.REACT_APP_BASE_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -51,7 +51,7 @@ const User = mongoose.model('User', userSchema);
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/auth/google/callback'
+    callbackURL: process.env.REACT_APP_BASE_URL + '/auth/google/callback'
 }, async (accessToken, refreshToken, profile, cb) => {
     console.log('Google profile:', profile);
     const existingUser = await User.findOne({ googleId: profile.id });
@@ -66,8 +66,8 @@ passport.use(new GoogleStrategy({
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
                 email: profile.emails[0].value,
-                picture: profile.photos[0].value, // Add this line
-                createdAt: Date.now() // Add this line
+                picture: profile.photos[0].value,
+                createdAt: Date.now()
             });
             const savedUser = await user.save();
             console.log('User saved:', savedUser);
@@ -94,11 +94,10 @@ app.get('/auth/google', passport.authenticate('google', {
 }));
 
 app.get('/auth/google/callback', passport.authenticate('google'), async (req, res) => {
-    // Successful authentication, update lastLoginAt and save the user document.
     req.user.lastLoginAt = Date.now();
     await req.user.save();
 
-    res.redirect('http://localhost:3001');
+    res.redirect(process.env.REACT_APP_BASE_URL);
 });
 
 app.listen(3000, () => {
