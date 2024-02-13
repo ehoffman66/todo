@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Checkbox from './components/Checkbox';
-import Button from './components/Button';
-import Input from './components/Input';
-import Card from './components/Card';
-import Badge from './components/Badge';
-import Select from './components/Select';
 import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { FiSave } from 'react-icons/fi';
-import SettingsCard from './components/SettingsCard';
-import StatsCard from './components/StatsCard';
-import GoalsCard from './components/GoalsCard';
 import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Avatar from './components/Avatar';
 import { FaGoogle } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { Checkbox, Button, Input, Card, Badge, Select, SettingsCard, StatsCard, GoalsCard, Avatar } from './components';
 
 function App() {
    const [user, setUser] = useState(null);
