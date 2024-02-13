@@ -135,7 +135,7 @@ const taskSchema = new Schema({
     completed: { type: Boolean, default: false },
     dueDate: Date,
     labels: [String],
-    completedAt: Date
+    completedAt: Date,
 });
 
 const Task = mongoose.model('Task', taskSchema);
