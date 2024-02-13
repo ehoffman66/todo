@@ -12,9 +12,9 @@ const Checkbox = ({ id, item, checked, onChange }) => {
             >
                 {checked && <MdClose className="h-4 w-4" style={{ transform: 'scale(1.5)' }} />}
             </button>
-            <p className="text-left" style={{ fontSize: '1.2em', textDecoration: checked ? 'line-through' : 'none' }}>
+            <div className="text-left" style={{ fontSize: '1.2em', textDecoration: checked ? 'line-through' : 'none' }}>
                 {item}
-            </p>
+            </div>
         </div>
     );
 };
