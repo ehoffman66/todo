@@ -413,7 +413,7 @@ function App() {
                               </div>
                            : 
                               <div className="flex justify-center">
-                                 <Button onClick={() => window.location.href=`${process.env.REACT_APP_BASE_URL}/auth/google`} color={cardColor}>
+                                 <Button onClick={() => window.location.href=`${process.env.REACT_APP_SERVER_URL}/auth/google`} color={cardColor}>
                                     <FaGoogle className="mr-2" /> Login
                                  </Button>
                               </div>

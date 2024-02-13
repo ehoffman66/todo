@@ -10,7 +10,7 @@ const cors = require('cors');
 app.use(express.json());
 
 app.use(cors({
-    origin: process.env.REACT_APP_BASE_URL,
+    origin: process.env.REACT_APP_BASE_URL, // Client URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -51,9 +51,10 @@ const User = mongoose.model('User', userSchema);
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.REACT_APP_BASE_URL + '/auth/google/callback'
+    callbackURL: `${process.env.REACT_APP_SERVER_URL}/auth/google/callback`
 }, async (accessToken, refreshToken, profile, cb) => {
     console.log('Google profile:', profile);
+    console.log(process.env.SERVER_URL);
     const existingUser = await User.findOne({ googleId: profile.id });
 
     if (existingUser) {
@@ -66,8 +67,8 @@ passport.use(new GoogleStrategy({
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
                 email: profile.emails[0].value,
-                picture: profile.photos[0].value,
-                createdAt: Date.now()
+                picture: profile.photos[0].value, // Add this line
+                createdAt: Date.now() // Add this line
             });
             const savedUser = await user.save();
             console.log('User saved:', savedUser);
@@ -94,6 +95,7 @@ app.get('/auth/google', passport.authenticate('google', {
 }));
 
 app.get('/auth/google/callback', passport.authenticate('google'), async (req, res) => {
+    // Successful authentication, update lastLoginAt and save the user document.
     req.user.lastLoginAt = Date.now();
     await req.user.save();
 
@@ -102,6 +104,7 @@ app.get('/auth/google/callback', passport.authenticate('google'), async (req, re
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
+    console.log(process.env.REACT_APP_SERVER_URL);
 });
 
 // Route to check if the user is logged in
@@ -131,7 +134,8 @@ const taskSchema = new Schema({
     category: String,
     completed: { type: Boolean, default: false },
     dueDate: Date,
-    labels: [String]
+    labels: [String],
+    completedAt: Date
 });
 
 const Task = mongoose.model('Task', taskSchema);
@@ -219,6 +223,11 @@ app.put('/api/tasks/:id', async (req, res) => {
         }
         if (dueDate !== undefined) {
             task.dueDate = new Date(dueDate);
+        }
+        if (completed) {
+            task.completedAt = new Date();
+        } else {
+            task.completedAt = null;
         }
 
         await task.save();
