@@ -14,6 +14,8 @@ import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Avatar from './components/Avatar';
 import { FaGoogle } from 'react-icons/fa';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
    const [user, setUser] = useState(null);
@@ -406,7 +408,7 @@ function App() {
                                     </div>
                                  </div>
                                  <Button onClick={handleLogout} className="mt-4" color={cardColor}>
-                                    Logout
+                                    <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} /> Logout
                                  </Button>
                               </div>
                            : 
