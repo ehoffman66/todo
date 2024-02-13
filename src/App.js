@@ -63,8 +63,6 @@ function App() {
          setUser(null);
          setTodos([]);
 
-         // Optionally, redirect the user to the login page
-         // history.push('/login');
       } else {
          console.error('Failed to log out');
       }
