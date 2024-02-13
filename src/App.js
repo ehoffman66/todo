@@ -614,7 +614,7 @@ function App() {
                                        >
                                        <div className="md:w-1/2">
                                           <Checkbox 
-                                             item={todo.text} 
+                                             item={<div dangerouslySetInnerHTML={{__html: linkify(todo.text)}} />} 
                                              checked={todo.completed} 
                                              onChange={() => toggleCompletion(todo._id)}
                                              style={{ fontSize: '5.2em' }}
