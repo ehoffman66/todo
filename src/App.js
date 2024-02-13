@@ -370,13 +370,13 @@ function App() {
 
       switch (filter) {
          case 'Today':
-            return dueDate.getFullYear() === today.getFullYear() &&
+            return todo.dueDate && dueDate.getFullYear() === today.getFullYear() &&
                dueDate.getMonth() === today.getMonth() &&
                dueDate.getDate() === today.getDate();
          case 'Overdue':
-            return dueDate < today && !todo.completed;
+            return todo.dueDate && dueDate < today && !todo.completed;
          case 'Tomorrow':
-            return dueDate.getFullYear() === tomorrow.getFullYear() &&
+            return todo.dueDate && dueDate.getFullYear() === tomorrow.getFullYear() &&
                dueDate.getMonth() === tomorrow.getMonth() &&
                dueDate.getDate() === tomorrow.getDate();
          default:
@@ -575,7 +575,7 @@ function App() {
                                        )}
                                        <div style={{ fontSize: '0.8em', display: 'flex', alignItems: 'center' }}>
                                           <FaRegCalendarAlt style={{ marginRight: '5px' }}/>
-                                          <span style={{ color: new Date(todo.dueDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0) ? 'red' : 'inherit' }}>
+                                          <span style={{ color: todo.dueDate && new Date(todo.dueDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0) ? 'red' : 'inherit' }}>
                                              {todo.dueDate ? new Date(todo.dueDate).toLocaleDateString('en-US') : "No Date"}
                                           </span>
                                           <span style={{ margin: '0 5px' }}>|</span>
