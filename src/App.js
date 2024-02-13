@@ -167,7 +167,7 @@ function App() {
       if (todo.dueDate) {
          const dueDate = new Date(todo.dueDate);
          const year = dueDate.getFullYear();
-         const month = String(dueDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed in JavaScript
+         const month = String(dueDate.getMonth() + 1).padStart(2, '0');
          const day = String(dueDate.getDate()).padStart(2, '0');
          setEditDueDate(`${year}-${month}-${day}`);
       } else {
@@ -267,14 +267,14 @@ function App() {
          ));
          setEditingTodo(null);
       } else {
-         // Add a new todo
+
          const newTodo = {
             id: Date.now(),
             text: task,
             completed: false,
             dueDate: localDueDate,
             category,
-            labels // Add the labels here
+            labels
          };
 
          console.log('User:', user);
@@ -316,9 +316,7 @@ function App() {
          method: 'DELETE',
          credentials: 'include',
       });
-
       if (response.ok) {
-         // Remove the todo from the state
          setTodos(todos.filter(todo => todo._id !== id));
       } else {
          console.error('Failed to delete todo');
