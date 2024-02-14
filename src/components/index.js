@@ -8,3 +8,4 @@ export { default as SettingsCard } from './SettingsCard';
 export { default as StatsCard } from './StatsCard';
 export { default as GoalsCard } from './GoalsCard';
 export { default as Avatar } from './Avatar';
+export { default as UserCard } from './UserCard';

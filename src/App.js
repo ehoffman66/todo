@@ -3,10 +3,7 @@ import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { FiSave } from 'react-icons/fi';
 import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { FaGoogle } from 'react-icons/fa';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { Checkbox, Button, Input, Card, Badge, Select, SettingsCard, StatsCard, GoalsCard, Avatar } from './components';
+import { Checkbox, Button, Input, Card, Badge, Select, SettingsCard, StatsCard, GoalsCard, Avatar, UserCard } from './components';
 
 function App() {
    const [user, setUser] = useState(null);
@@ -383,33 +380,8 @@ function App() {
             <div className="px-4 py-8 mx-auto md:w-10/12">
                <div className="flex flex-col md:flex-row justify-center">
                   <div className="w-full md:w-2/12 md:mr-4 mb-6 md:mb-2">
-                     <Card 
-                        backgroundColor={cardColor} 
-                        heading={<span className="text-2xl">USER</span>} 
-                        paragraph={
-                           user ? 
-                              <div className="flex flex-col items-center">
-                                 <div className="flex items-center space-x-4">
-                                    <Avatar imageUrl={user.picture} />
-                                    <div>
-                                       <p className="text-lg">{user.firstName}</p>
-                                       <p className="text-lg">{user.lastName}</p>
-                                    </div>
-                                 </div>
-                                 <Button onClick={handleLogout} className="mt-4" color={cardColor}>
-                                    <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} /> Logout
-                                 </Button>
-                              </div>
-                           : 
-                              <div className="flex justify-center">
-                                 <Button onClick={() => window.location.href=`${process.env.REACT_APP_SERVER_URL}/auth/google`} color={cardColor}>
-                                    <FaGoogle className="mr-2" /> Login
-                                 </Button>
-                              </div>
-                        }
-                     />
+                     <UserCard user={user} handleLogout={handleLogout} cardColor={cardColor} />
                   </div>
-
                   <div className="w-full md:w-8/12 md:mr-4 mb-6 md:mb-2">
                      <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
                         <div>
