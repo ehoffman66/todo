@@ -3,35 +3,21 @@ import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { FiSave } from 'react-icons/fi';
 import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Checkbox, Button, Input, Card, Badge, Select, SettingsCard, StatsCard, GoalsCard, Avatar, UserCard } from './components';
+import { Checkbox, Button, Input, Card, Badge, Select, SettingsCard, StatsCard, GoalsCard, UserCard } from './components';
 
-function App() {
+function App() { 
    const [user, setUser] = useState(null);
 
-   const fetchTodos = async () => {
+   const fetchTodos = async (userId) => {
       try {
-         const userResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/current_user`, {
+         const tasksResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks?userId=${userId}`, {
             credentials: 'include'
          });
-         if (!userResponse.ok) {
-            throw new Error('HTTP error ' + userResponse.status);
+         if (!tasksResponse.ok) {
+            throw new Error('HTTP error ' + tasksResponse.status);
          }
-         const user = await userResponse.json();
-         setUser(user);
-
-         if (user) {
-            const tasksResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks?userId=${user.googleId}`, {
-               credentials: 'include'
-            });
-            if (!tasksResponse.ok) {
-               throw new Error('HTTP error ' + tasksResponse.status);
-            }
-            const tasks = await tasksResponse.json();
-            setTodos(tasks);
-         } else {
-            const savedTodos = localStorage.getItem('todos');
-            setTodos(savedTodos ? JSON.parse(savedTodos) : []);
-         }
+         const tasks = await tasksResponse.json();
+         setTodos(tasks);
       } catch (error) {
          console.error('Failed to fetch data:', error);
       }
@@ -65,12 +51,8 @@ function App() {
       }
    };
 
-   // Fetch todos when the component mounts
    useEffect(() => {
-      fetchTodos();
-   }, []);
-
-   useEffect(() => {
+      console.log('useEffect in App.js called');
       fetch(`${process.env.REACT_APP_SERVER_URL}/api/current_user`, {
          credentials: 'include' // Include credentials
       })
@@ -82,7 +64,9 @@ function App() {
       })
       .then(data => {
          setUser(data);
-         console.log('User data:', data); // Log the user data to the console
+         if (data) {
+            fetchTodos(data.googleId); // Call fetchTodos here after setting the user
+         }
       })
       .catch((error) => console.error('Error:', error));
    }, []);
