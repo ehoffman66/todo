@@ -312,7 +312,7 @@ function App() {
             'Content-Type': 'application/json',
          },
          body: JSON.stringify(updatedTodo),
-         credentials: 'include', // Include credentials in the request
+         credentials: 'include',
       });
 
       if (response.ok) {
