@@ -4,6 +4,9 @@ import { FiSave } from 'react-icons/fi';
 import { FaListAlt } from 'react-icons/fa';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Checkbox, Button, Input, Card, Badge, Select, SettingsCard, StatsCard, GoalsCard, UserCard } from './components';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
 
 function App() { 
    const [user, setUser] = useState(null);
