@@ -372,39 +372,47 @@ function App() {
                      <Card backgroundColor={cardColor} heading={<span style={{ fontSize: '2em' }}>TASKS</span>} paragraph={
                         <div>
                            <form onSubmit={addTodo} className="flex flex-wrap justify-start items-center mb-4">
-                              <div className="min-w-300px m-2">
-                                 <Input 
-                                    value={task} 
-                                    setValue={setTask} 
-                                    size="300px"
-                                    placeholder="Add a new task" 
-                                 />
+                           <div className="min-w-300px m-2">
+                              <label htmlFor="task" className="visually-hidden">Task</label>
+                              <Input 
+                                 id="task"
+                                 value={task} 
+                                 setValue={setTask} 
+                                 size="300px"
+                                 placeholder="Add a new task" 
+                              />
                               </div>
                               <div className="min-w-130px m-2">
-                                 <Input 
-                                    value={category} 
-                                    setValue={handleSetCategory} 
-                                    size="130px"
-                                    placeholder="Category" 
-                                 />
+                              <label htmlFor="category" className="visually-hidden">Category</label>
+                              <Input 
+                                 id="category"
+                                 value={category} 
+                                 setValue={handleSetCategory} 
+                                 size="130px"
+                                 placeholder="Category" 
+                              />
                               </div>
                               <div className="min-w-150px m-2">
-                                 <Input 
-                                    type="date"
-                                    value={dueDate} 
-                                    setValue={setDueDate}
-                                    size="150px"
-                                    placeholder="Due date" 
-                                 />
+                              <label htmlFor="dueDate" className="visually-hidden">Due Date</label>
+                              <Input 
+                                 id="dueDate"
+                                 type="date"
+                                 value={dueDate} 
+                                 setValue={setDueDate}
+                                 size="150px"
+                                 placeholder="Due date" 
+                              />
                               </div>
                               <div className="m-2">
-                                 <Input 
-                                    type="text" 
-                                    placeholder="Enter labels" 
-                                    value={labels.join(', ')} 
-                                    setValue={handleSetLabels}
-                                    size="300px"
-                                 />
+                              <label htmlFor="labels" className="visually-hidden">Labels</label>
+                              <Input 
+                                 id="labels"
+                                 type="text" 
+                                 placeholder="Enter labels" 
+                                 value={labels.join(', ')} 
+                                 setValue={handleSetLabels}
+                                 size="300px"
+                              />
                               </div>
                               <div className="m-2">
                                  <Button type="submit" color={cardColor}>
