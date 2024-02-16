@@ -10,7 +10,7 @@ const cors = require('cors');
 app.use(express.json());
 
 app.use(cors({
-    origin: process.env.REACT_APP_BASE_URL, // Client URL
+    origin: process.env.REACT_APP_BASE_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -65,8 +65,8 @@ passport.use(new GoogleStrategy({
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
                 email: profile.emails[0].value,
-                picture: profile.photos[0].value, // Add this line
-                createdAt: Date.now() // Add this line
+                picture: profile.photos[0].value,
+                createdAt: Date.now()
             });
             const savedUser = await user.save();
             console.log('User saved:', savedUser);

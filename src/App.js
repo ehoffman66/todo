@@ -68,7 +68,7 @@ function App() {
       .then(data => {
          setUser(data);
          if (data) {
-            fetchTodos(data.googleId); // Call fetchTodos here after setting the user
+            fetchTodos(data.googleId);
          }
       })
       .catch((error) => console.error('Error:', error));
