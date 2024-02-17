@@ -94,7 +94,27 @@ function App() {
 
    useEffect(() => {
       localStorage.setItem('cardColor', cardColor);
-   }, [cardColor]);
+
+      // Check if user is logged in
+      if (user) {
+         console.log("User: Here",user._id)
+         // Make a request to the server to update the user's record
+         fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/${user._id}`, {
+            method: 'PUT',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cardColor }),
+            credentials: 'include',
+         })
+         .then(response => {
+            if (!response.ok) {
+               throw new Error('Failed to update user');
+            }
+         })
+         .catch(error => console.error('Error:', error));
+      }
+   }, [cardColor, user]);
 
    const colorOptions = ['#bc95d4', '#6CD3BF', 'white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow'];
 

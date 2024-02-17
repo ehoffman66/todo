@@ -42,6 +42,7 @@ const userSchema = new Schema({
     picture: String,
     createdAt: { type: Date, default: Date.now },
     lastLoginAt: Date,
+    cardColor: String,
 });
 
 const User = mongoose.model('User', userSchema);
@@ -98,6 +99,28 @@ app.get('/auth/google/callback', passport.authenticate('google'), async (req, re
     await req.user.save();
 
     res.redirect(process.env.REACT_APP_BASE_URL);
+});
+
+app.put('/api/users/:id', async (req, res) => {
+    const { id } = req.params;
+    const { cardColor } = req.body;
+
+    try {
+        const user = await User.findById(id);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        user.cardColor = cardColor;
+
+        await user.save();
+
+        res.send(user);
+    } catch (err) {
+        console.error('Failed to update user:', err);
+        res.status(500).send(err);
+    }
 });
 
 app.listen(3000, () => {
