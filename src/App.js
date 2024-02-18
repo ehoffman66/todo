@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Checkbox, Button, Input, Card, Badge, Select, SettingsCard, StatsCard, GoalsCard, UserCard } from './components';
 import ReactGA from 'react-ga';
 import { linkify } from './utils';
+import { FaTag } from 'react-icons/fa';
 
 ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
 
@@ -555,6 +556,12 @@ function App() {
                                              <FaListAlt style={{ marginRight: '5px' }} />
                                              {todo.category}
                                           </span>
+                                          {todo.labels && todo.labels.map((label, index) => (
+                                             <span key={index} style={{ marginLeft: '10px', backgroundColor: 'lightgray', borderRadius: '5px', padding: '2px 5px', display: 'flex', alignItems: 'center' }}>
+                                                <FaTag style={{ marginRight: '5px' }} />
+                                                {label}
+                                             </span>
+                                          ))}
                                        </div>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', width: '80px' }}>
