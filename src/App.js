@@ -70,6 +70,7 @@ function App() {
          setUser(data);
          if (data) {
             fetchTodos(data.googleId);
+            setCardColor(data.cardColor);
          }
       })
       .catch((error) => console.error('Error:', error));
