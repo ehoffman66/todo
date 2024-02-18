@@ -53,8 +53,6 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: `${process.env.REACT_APP_SERVER_URL}/auth/google/callback`
 }, async (accessToken, refreshToken, profile, cb) => {
-    console.log('Google profile:', profile);
-    console.log(process.env.SERVER_URL);
     const existingUser = await User.findOne({ googleId: profile.id });
 
     if (existingUser) {
@@ -148,7 +146,6 @@ app.put('/api/users/:id/hideCompleted', async (req, res) => {
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
-    console.log(process.env.REACT_APP_SERVER_URL);
 });
 
 // Route to check if the user is logged in
@@ -216,10 +213,8 @@ app.get('/api/tasks', async (req, res) => {
     }
 
     try {
-        console.log('User ID Fetch:', req.user.id);
         const userId = req.user.id;
         const tasks = await Task.find({ userId: userId });
-        console.log('Tasks:', tasks);
         res.send(tasks);
     } catch (err) {
         console.error('Failed to fetch tasks:', err);

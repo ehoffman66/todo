@@ -37,7 +37,6 @@ function App() {
    });
 
    const handleLogout = async () => {
-      console.log('Logging out user:', user);
 
       // Make a request to the logout endpoint
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/logout`, {
@@ -56,7 +55,6 @@ function App() {
    };
 
    useEffect(() => {
-      console.log('useEffect in App.js called');
       fetch(`${process.env.REACT_APP_SERVER_URL}/api/current_user`, {
          credentials: 'include' // Include credentials
       })
@@ -117,9 +115,7 @@ function App() {
    useEffect(() => {
       localStorage.setItem('cardColor', cardColor);
 
-      // Check if user is logged in
       if (user) {
-         console.log("User: Here",user._id)
          // Make a request to the server to update the user's record
          fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/${user._id}`, {
             method: 'PUT',
@@ -273,7 +269,6 @@ function App() {
             labels
          };
 
-         console.log('User:', user);
          console.log('New Todo:', newTodo);
 
          if (user) {
@@ -325,8 +320,6 @@ function App() {
 
       const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
       console.log('Updated Todo:', updatedTodo);
-      console.log('User:', user);
-      console.log('ID:', id);
 
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks/${id}`, {
          method: 'PUT',
