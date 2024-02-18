@@ -76,6 +76,27 @@ function App() {
       .catch((error) => console.error('Error:', error));
    }, []);
 
+   useEffect(() => {
+      // Check if user is logged in
+      if (user) {
+         // Make a request to the server to update the user's record
+         fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/${user._id}/hideCompleted`, {
+            method: 'PUT',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ hideCompleted }),
+            credentials: 'include',
+         })
+         .then(response => {
+            if (!response.ok) {
+               throw new Error('Failed to update user');
+            }
+         })
+         .catch(error => console.error('Error:', error));
+      }
+   }, [hideCompleted, user]);
+
    const [labels, setLabels] = useState([]);
 
    const handleSetLabels = (value) => {

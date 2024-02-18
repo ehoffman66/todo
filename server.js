@@ -42,7 +42,8 @@ const userSchema = new Schema({
     picture: String,
     createdAt: { type: Date, default: Date.now },
     lastLoginAt: Date,
-    cardColor: String,
+    cardColor: { type: String, default: 'defaultColor' },
+    hideCompleted: { type: Boolean, default: false },
 });
 
 const User = mongoose.model('User', userSchema);
@@ -113,6 +114,28 @@ app.put('/api/users/:id', async (req, res) => {
         }
 
         user.cardColor = cardColor;
+
+        await user.save();
+
+        res.send(user);
+    } catch (err) {
+        console.error('Failed to update user:', err);
+        res.status(500).send(err);
+    }
+});
+
+app.put('/api/users/:id/hideCompleted', async (req, res) => {
+    const { id } = req.params;
+    const { hideCompleted } = req.body;
+
+    try {
+        const user = await User.findById(id);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        user.hideCompleted = hideCompleted;
 
         await user.save();
 
