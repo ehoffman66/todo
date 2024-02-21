@@ -22,9 +22,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: { 
         secure: process.env.SESSION_SECURE === 'true',
-        httpOnly: false,
-        sameSite: 'none',
-        maxAge: 1000 * 60 * 60 * 48,
+        httpOnly:'auto'
     }
 }));
 
