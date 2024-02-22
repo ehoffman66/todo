@@ -102,7 +102,7 @@ app.get('/auth/google/callback', passport.authenticate('google'), async (req, re
     req.user.lastLoginAt = Date.now();
     await req.user.save();
 
-    console.log('Session:', req.session);
+    await console.log('Session:', req.session);
 
     res.redirect(process.env.REACT_APP_BASE_URL);
 });
