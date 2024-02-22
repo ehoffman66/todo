@@ -22,7 +22,8 @@ app.use(session({
     saveUninitialized: false,
     cookie: { 
         secure: process.env.SESSION_SECURE === 'true',
-        httpOnly:'auto'
+        httpOnly:'auto',
+        proxy: true,
     }
 }));
 
