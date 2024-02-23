@@ -22,7 +22,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { 
         secure: process.env.SESSION_SECURE === 'true',
-        httpOnly:'auto',
+        httpOnly: true,
         proxy: true,
     }
 }));
@@ -172,7 +172,7 @@ app.post('/api/logout', (req, res) => {
             return res.status(500).send('Failed to log out');
         }
 
-        res.clearCookie('sessionID');
+        res.clearCookie('connect.sid');
         res.send('Logged out');
     });
 });
