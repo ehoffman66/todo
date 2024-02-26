@@ -22,7 +22,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { 
         secure: process.env.SESSION_SECURE === 'true',
-        httpOnly: true,
+        httpOnly: auto,
         proxy: true,
     }
 }));
