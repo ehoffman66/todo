@@ -24,8 +24,11 @@ app.use(session({
         secure: process.env.SESSION_SECURE === 'true',
         httpOnly: true,
         proxy: true,
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
+
+app.set('trust proxy', 1);
 
 app.use(passport.initialize());
 app.use(passport.session());
