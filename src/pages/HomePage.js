@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaTrash, FaRegCalendarAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
-import { FiSave } from 'react-icons/fi';
-import { FaListAlt } from 'react-icons/fa';
-import { Checkbox, Button, Input, Card, Badge, Select, SettingsCard, StatsCard, GoalsCard, UserCard } from '../components/common';
-import { linkify } from '../utils';
-import { FaTag } from 'react-icons/fa';
+import { Card, GoalsCard, SettingsCard, StatsCard, UserCard } from '../components/common';
 import AddTodoForm from '../components/tasks/AddTodoForm';
 import CompletedTodos from '../components/tasks/CompletedTodos';
 import DueTodos from '../components/tasks/DueTodos';
