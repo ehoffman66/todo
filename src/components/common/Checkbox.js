@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdClose } from 'react-icons/md';
 
-const Checkbox = ({ id, item, checked, onChange }) => {
+const Checkbox = ({ id, item, checked, onChange, style }) => {
     return (
         <div className='my-2 flex items-center font-bold'>
             <button
