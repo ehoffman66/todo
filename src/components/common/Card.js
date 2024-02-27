@@ -1,9 +1,9 @@
 import React from 'react';
 
 type Props = {
-    heading: string,
+    heading: string | React.ReactNode,
     paragraph: React.ReactNode,
-    size: string,
+    size?: string,
     backgroundColor: string,
 };
 
