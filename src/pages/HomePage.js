@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Card, GoalsCard, SettingsCard, StatsCard, UserCard } from '../components/common';
 import AddTodoForm from '../components/tasks/AddTodoForm';
 import CompletedTodos from '../components/tasks/CompletedTodos';
@@ -44,28 +44,36 @@ const HomePage = () => {
     });
 
     // Get unique categories for badges
-    const categories = [...new Set(todos.map((todo) => todo.category || 'Blank'))];
+    const categories = useMemo(() => {
+        return [...new Set(todos.map((todo) => todo.category || 'Blank'))];
+    }, [todos]);
 
-    const uniqueCategories = todos.map((todo) => todo.category).filter((category, index, self) => self.indexOf(category) === index);
+    const uniqueCategories = useMemo(() => {
+        return todos.map((todo) => todo.category).filter((category, index, self) => self.indexOf(category) === index);
+    }, [todos]);
 
-    const sortedTodos = [...todos].sort((a, b) => {
-        if (a.completed !== b.completed) {
-            return a.completed ? 1 : -1;
-        }
-        switch (sortOption) {
-            case 'Due Date':
-                const dateA = new Date(a.dueDate);
-                const dateB = new Date(b.dueDate);
-                return dateA - dateB || a.id - b.id;
-            case 'Category':
-                const categoryComparison = a.category.localeCompare(b.category);
-                return categoryComparison !== 0 ? categoryComparison : a.id - b.id;
-            default:
-                return 0;
-        }
-    });
+    const sortedTodos = useMemo(() => {
+        return [...todos].sort((a, b) => {
+            if (a.completed !== b.completed) {
+                return a.completed ? 1 : -1;
+            }
+            switch (sortOption) {
+                case 'Due Date':
+                    const dateA = new Date(a.dueDate);
+                    const dateB = new Date(b.dueDate);
+                    return dateA - dateB || a.id - b.id;
+                case 'Category':
+                    const categoryComparison = a.category.localeCompare(b.category);
+                    return categoryComparison !== 0 ? categoryComparison : a.id - b.id;
+                default:
+                    return 0;
+            }
+        });
+    }, [todos, sortOption]);
 
-    const completedTodos = sortedTodos.filter((todo) => todo.completed);
+    const completedTodos = useMemo(() => {
+        return sortedTodos.filter((todo) => todo.completed);
+    }, [sortedTodos]);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/api/current_user`, {
