@@ -52,6 +52,18 @@ const HomePage = () => {
         return todos.map((todo) => todo.category).filter((category, index, self) => self.indexOf(category) === index);
     }, [todos]);
 
+    const uniqueLabels = useMemo(() => {
+        const labels = new Set();
+        todos.forEach(todo => {
+            if (todo.labels) {
+                todo.labels.forEach(label => {
+                    labels.add(label);
+                });
+            }
+        });
+        return Array.from(labels);
+    }, [todos]);
+
     const sortedTodos = useMemo(() => {
         return [...todos].sort((a, b) => {
             if (a.completed !== b.completed) {
@@ -363,6 +375,7 @@ const HomePage = () => {
                                         editDueDate={editDueDate}
                                         handleEditClick={handleEditClick}
                                         deleteTodo={deleteTodo}
+                                        labels={uniqueLabels}
                                     />
                                     <div>
                                         {!hideCompleted && (
