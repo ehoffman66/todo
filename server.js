@@ -109,7 +109,7 @@ app.get('/auth/google/callback', passport.authenticate('google'), async (req, re
 
     await console.log('Session:', req.session);
 
-    res.redirect(process.env.REACT_APP_BASE_URL);
+    res.redirect(`${process.env.REACT_APP_BASE_URL}/all`);
 });
 
 app.put('/api/users/:id', async (req, res) => {
