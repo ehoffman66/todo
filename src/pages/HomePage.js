@@ -3,6 +3,7 @@ import { Card, GoalsCard, SettingsCard, StatsCard, UserCard } from '../component
 import AddTodoForm from '../components/tasks/AddTodoForm';
 import CompletedTodos from '../components/tasks/CompletedTodos';
 import DueTodos from '../components/tasks/DueTodos';
+import { useNavigate } from 'react-router-dom';
 
 const colorOptions = ['#bc95d4', '#6CD3BF', 'white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow'];
 
@@ -25,7 +26,6 @@ const HomePage = () => {
     // State variables for new todo
     const [task, setTask] = useState('');
     const [dueDate, setDueDate] = useState('');
-    const [category, setCategory] = useState('');
 
     // State variables for filters and sorting
     const [filter, setFilter] = useState('All');
@@ -74,6 +74,9 @@ const HomePage = () => {
     const completedTodos = useMemo(() => {
         return sortedTodos.filter((todo) => todo.completed);
     }, [sortedTodos]);
+
+    const navigate = useNavigate();
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/api/current_user`, {
@@ -146,6 +149,19 @@ const HomePage = () => {
         localStorage.setItem('todos', JSON.stringify(todos));
     }, [todos]);
 
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/current_user`, {
+            credentials: 'include',
+        })
+            .then(res => {
+                if (res.status !== 200) {
+                    navigate('/');
+                    isAuthenticated(false);
+                }
+            })
+            .catch(err => console.error(err));
+    }, [navigate, isAuthenticated]);
+
     const fetchTodos = async (userId) => {
         try {
             const tasksResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/tasks?userId=${userId}`, {
@@ -172,6 +188,10 @@ const HomePage = () => {
             // Clear user data from the state
             setUser(null);
             setTodos([]);
+            // Update the isAuthenticated state to false
+            setIsAuthenticated(false);
+            // Redirect the user to the landing page
+            navigate('/');
         } else {
             console.error('Failed to log out');
         }
