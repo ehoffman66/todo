@@ -1,0 +1,25 @@
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+.landing-page h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.landing-page p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+.landing-page button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
