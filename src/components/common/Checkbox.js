@@ -6,7 +6,7 @@ const Checkbox = ({ id, item, checked, onChange, style }) => {
         <div className='my-2 flex items-center font-bold'>
             <button
                 onClick={() => onChange(id)}
-                className='mr-2.5 grid h-5 w-5 place-items-center rounded-[5px] bg-white outline outline-5 outline-black'
+                className='flex-shrink-0 mr-2.5 grid place-items-center rounded-[5px] bg-white outline outline-5 outline-black h-5 w-5 sm:h-5 sm:w-5'
                 role='checkbox'
                 aria-checked={checked}
             >
