@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Card, GoalsCard, SettingsCard, StatsCard, UserCard } from '../components/common';
+import { Card, GoalsCard, SettingsCard, StatsCard, UserCard, TitleCard } from '../components/common';
 import AddTodoForm from '../components/tasks/AddTodoForm';
 import CompletedTodos from '../components/tasks/CompletedTodos';
 import DueTodos from '../components/tasks/DueTodos';
@@ -340,6 +340,7 @@ const HomePage = () => {
             <div className='px-4 py-8 mx-auto md:w-10/12'>
                 <div className='flex flex-col md:flex-row justify-center'>
                     <div className='w-full md:w-2/12 md:mr-4 mb-6 md:mb-2'>
+                        <TitleCard cardColor={cardColor} />
                         <UserCard user={user} handleLogout={handleLogout} cardColor={cardColor} />
                     </div>
                     <div className='w-full md:w-8/12 md:mr-4 mb-6 md:mb-2'>

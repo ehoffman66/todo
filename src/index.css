@@ -27,3 +27,7 @@
 .container {
   @apply max-w-4xl;
 }
+
+.font-kanit {
+  font-family: 'Kanit', sans-serif;
+}
