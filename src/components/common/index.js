@@ -1,5 +1,5 @@
 export { default as Checkbox } from './Checkbox';
-export { default as Button } from './Button';
+export { default as Button } from './Button.tsx';
 export { default as Input } from './Input';
 export { default as Card } from './Card.tsx';
 export { default as Badge } from './Badge';
@@ -7,6 +7,6 @@ export { default as Select } from './Select';
 export { default as SettingsCard } from './SettingsCard';
 export { default as StatsCard } from './StatsCard';
 export { default as GoalsCard } from './GoalsCard';
-export { default as Avatar } from './Avatar';
+export { default as Avatar } from './Avatar.tsx';
 export { default as UserCard } from './UserCard';
 export { default as TitleCard } from './TitleCard';

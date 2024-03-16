@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from './Card.tsx';
-import Avatar from './Avatar';
-import Button from './Button';
+import Avatar from './Avatar.tsx';
+import Button from './Button.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FaGoogle } from 'react-icons/fa';
