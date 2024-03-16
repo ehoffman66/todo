@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './Card';
+import Card from './Card.tsx';
 import Avatar from './Avatar';
 import Button from './Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
