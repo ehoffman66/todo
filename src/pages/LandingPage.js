@@ -34,13 +34,13 @@ const LandingPage = () => {
             </style>
             <h1 className='mb-0 leading-none title' style={{ fontFamily: 'Kanit' }}>Brutal</h1>
             <h1 className='mt-0 mb-4 leading-none subtitle' style={{ fontFamily: 'Kanit' }}>Tasks</h1>
-            <p className='mb-8 text-2xl md:text-3xl lg:text-4xl'>Conquer Your Day, The Brutal Way</p>
-            <nav className='mb-8'>
+            <p className='mb-4 text-2xl md:text-3xl lg:text-4xl'>Conquer Your Day, The Brutal Way</p>
+            <nav className='mb-3'>
                 <button onClick={() => {}} className='mr-4'>Home</button>
                 <button onClick={handleAboutClick}>About</button>
             </nav>
             {showAbout && (
-                <div className='mt-4 mb-4 w-full max-w-xl mx-auto'>
+                <div className='mb-4 w-full max-w-xl mx-auto'>
                     <Card 
                         heading="About Brutal Tasks" 
                         paragraph="Welcome to Brutal Tasks! We're all about getting things done, and we mean business. With Brutal Tasks, you can organize your to-dos, prioritize them like a boss, and focus on one task at a time to smash your goals. Whether you're a student battling assignment deadlines, a professional wrestling with project milestones, or just someone who loves the sweet victory of a completed task list, Brutal Tasks is your ally. So gear up, prepare for a productivity boost, and conquer your day, the Brutal Way!" 
