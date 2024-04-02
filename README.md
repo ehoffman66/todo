@@ -57,23 +57,24 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Features
 
 - Add/Udpate/Delete Tasks
+- Labels
 - Mark tasks as completed
 - Filter Tasks
 - Hide completed tasks
+- Secure Login (Google)
+
 
 ## Upcoming Features
 
 Anything you don't see on the list, but would like to see
 please send us a message.
 
-- Labels
+- Edit Labels
 - Goal Tracking (Inprogress)
 - Full Application Search
 - Full Page Task View
 - Reorder Sidebars
 - Todo Desriptions
-- Secure Login (Google)
-- Todos Sync on All Devices
 - Sharing Tasks
 - Mobile App
 - AI Recommendations
