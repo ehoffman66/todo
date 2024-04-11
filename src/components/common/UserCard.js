@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FaGoogle } from 'react-icons/fa';
 
-const UserCard = ({ user, handleLogout, cardColor }) => {
+const UserCard = ({ user, handleLogout, cardColor, textColor }) => {
     return (
         <Card
             backgroundColor={cardColor}
-            heading={<span className='text-2xl'>USER</span>}
+            heading={<span className='text-2xl' style={{ color: textColor }}>USER</span>}
             paragraph={
                 user ? (
-                    <div className='flex flex-col items-center'>
+                    <div className='flex flex-col items-center' style={{ color: textColor }}>
                         <div className='flex items-center space-x-4'>
                             <Avatar imageUrl={user.picture} />
                             <div>
@@ -21,13 +21,13 @@ const UserCard = ({ user, handleLogout, cardColor }) => {
                                 <p className='text-lg'>{user.lastName}</p>
                             </div>
                         </div>
-                        <Button onClick={handleLogout} className='mt-4' color={cardColor}>
+                        <Button onClick={handleLogout} className='mt-4' color={cardColor} cardColor={cardColor}>
                             <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} /> Logout
                         </Button>
                     </div>
                 ) : (
                     <div className='flex justify-center'>
-                        <Button onClick={() => (window.location.href = `${process.env.REACT_APP_SERVER_URL}/auth/google`)} color={cardColor}>
+                        <Button onClick={() => (window.location.href = `${process.env.REACT_APP_SERVER_URL}/auth/google`)} color={cardColor} cardColor={cardColor}>
                             <FaGoogle className='mr-2' /> Login
                         </Button>
                     </div>

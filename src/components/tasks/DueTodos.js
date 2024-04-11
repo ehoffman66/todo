@@ -36,10 +36,10 @@ const DueTodos = ({
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <FaRegCalendarAlt style={{ marginRight: '5px' }} /> {badge}
                             </div>
-                        
                         )}
                         isSelected={selectedBadge === badge}
                         onClick={() => handleBadgeClick(badge)}
+                        cardColor={cardColor} // Pass cardColor here
                     />
                 ))}
                 <span style={{ margin: '0 10px' }}></span>
@@ -54,6 +54,7 @@ const DueTodos = ({
                         }
                         isSelected={selectedBadge === category}
                         onClick={() => handleBadgeClick(category)}
+                        cardColor={cardColor}
                     />
                 ))}
             </div>
@@ -173,10 +174,10 @@ const DueTodos = ({
                                         width: '80px',
                                     }}
                                 >
-                                    <Button onClick={() => handleEditClick(todo)} style={{ marginRight: '10px' }} color={cardColor}>
+                                    <Button onClick={() => handleEditClick(todo)} style={{ marginRight: '10px' }} color={cardColor} cardColor={cardColor}>
                                         <FaPencilAlt />
                                     </Button>
-                                    <Button onClick={() => deleteTodo(todo._id)} color={cardColor}>
+                                    <Button onClick={() => deleteTodo(todo._id)} color={cardColor} cardColor={cardColor}>
                                         <FaTrash />
                                     </Button>
                                 </div>
