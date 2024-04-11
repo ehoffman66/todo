@@ -23,7 +23,7 @@ const SettingsCard = ({ cardColor, hideCompleted, setHideCompleted, colorOptions
                         <label>Card Color</label>
                         <div className='flex flex-wrap justify-start items-center space-x-2 space-y-2'>
                             {colorOptions.map((color) => (
-                                <Badge key={color} badgeColor={color} badgeText='' isSelected={cardColor === color} onClick={setCardColor} />
+                                <Badge key={color} badgeColor={color} badgeText='' isSelected={cardColor === color} onClick={setCardColor} cardColor={cardColor} />
                             ))}
                         </div>
                     </div>

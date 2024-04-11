@@ -5,7 +5,7 @@ import CompletedTodos from '../components/tasks/CompletedTodos';
 import DueTodos from '../components/tasks/DueTodos';
 import { useNavigate } from 'react-router-dom';
 
-const colorOptions = ['#bc95d4', '#6CD3BF', 'white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow'];
+const colorOptions = ['#bc95d4', '#6CD3BF', 'white', 'lightgray', 'lightblue', 'lightgreen', 'lightyellow', 'Black'];
 
 const sortOptions = ['Due Date', 'Category'];
 
@@ -42,6 +42,8 @@ const HomePage = () => {
         const savedColor = localStorage.getItem('cardColor');
         return savedColor ? savedColor : '#bc95d4';
     });
+
+    const textColor = cardColor === 'Black' ? 'white' : 'black';
 
     // Get unique categories for badges
     const categories = useMemo(() => {
@@ -340,15 +342,15 @@ const HomePage = () => {
             <div className='px-4 py-8 mx-auto md:w-10/12'>
                 <div className='flex flex-col md:flex-row justify-center'>
                     <div className='w-full md:w-2/12 md:mr-4 mb-6 md:mb-2'>
-                        <TitleCard cardColor={cardColor} />
-                        <UserCard user={user} handleLogout={handleLogout} cardColor={cardColor} />
+                        <TitleCard cardColor={cardColor} textColor={textColor} />
+                        <UserCard user={user} handleLogout={handleLogout} cardColor={cardColor} textColor={textColor} />
                     </div>
                     <div className='w-full md:w-8/12 md:mr-4 mb-6 md:mb-2'>
                         <Card
                             backgroundColor={cardColor}
-                            heading={<span style={{ fontSize: '2em' }}>TASKS</span>}
+                            heading={<span style={{ fontSize: '2em', color: textColor }}>TASKS</span>}
                             paragraph={
-                                <div>
+                                <div style={{ color: textColor }}>
                                     <AddTodoForm 
                                         user={user}
                                         todos={todos}
@@ -403,10 +405,10 @@ const HomePage = () => {
                     </div>
                     <div className='w-full md:w-2/12 md:mr-4 mb-6 md:mb-2'>
                         <div className='side-cards flex flex-col'>
-                            <div className='stats-card'>
+                            <div className='stats-card' style={{ color: textColor }}>
                                 <StatsCard todos={todos} cardColor={cardColor} />
                             </div>
-                            <div className='settings-card mt-4'>
+                            <div className='settings-card mt-4' style={{ color: textColor }}>
                                 <SettingsCard
                                     cardColor={cardColor}
                                     hideCompleted={hideCompleted}
@@ -415,7 +417,7 @@ const HomePage = () => {
                                     setCardColor={setCardColor}
                                 />
                             </div>
-                            <div className='settings-card mt-4'>
+                            <div className='settings-card mt-4' style={{ color: textColor }}>
                                 <GoalsCard
                                     cardColor={cardColor}
                                     hideCompleted={hideCompleted}

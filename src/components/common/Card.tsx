@@ -9,13 +9,15 @@ type Props = {
 };
 
 const Card = ({ heading, paragraph, size = 'w-full', backgroundColor, showDivider = true }: Props) => {
+    const dividerColor = backgroundColor !== 'Black' ? 'border-black' : 'border-white';
+
     return (
         <div
             style={{ backgroundColor: backgroundColor }}
-            className={`${size} rounded-md border-2 border-black font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mx-auto`}
+            className={`${size} rounded-md border-2 ${dividerColor} font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mx-auto`}
         >
             {showDivider ? (
-                <div className='border-b-2 border-black p-4'>
+                <div className={`border-b-2 ${dividerColor} p-4`}>
                     <h2 className='text-lg'>{heading}</h2>
                 </div>
             ) : (
