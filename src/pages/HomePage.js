@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Card, GoalsCard, SettingsCard, StatsCard, UserCard, TitleCard } from '../components/common';
+import { Card, SettingsCard, StatsCard, UserCard, TitleCard } from '../components/common';
 import AddTodoForm from '../components/tasks/AddTodoForm';
 import CompletedTodos from '../components/tasks/CompletedTodos';
 import DueTodos from '../components/tasks/DueTodos';
@@ -418,6 +418,7 @@ const HomePage = () => {
                                 />
                             </div>
                             <div className='settings-card mt-4' style={{ color: textColor }}>
+                                {/*
                                 <GoalsCard
                                     cardColor={cardColor}
                                     hideCompleted={hideCompleted}
@@ -425,6 +426,7 @@ const HomePage = () => {
                                     colorOptions={colorOptions}
                                     setCardColor={setCardColor}
                                 />
+                        */}
                             </div>
                         </div>
                     </div>
